@@ -6,7 +6,7 @@ public class House : StationaryUnit {
 
     protected override void Start() {
         base.Start();
-        playerScript.unitSpaces += 5;
+        Player.Instance.AddSpaces(5);
     }
 
     protected override void Update() {
@@ -26,7 +26,7 @@ public class House : StationaryUnit {
     }
 
     protected override void Die() {
-        playerScript.unitSpaces -= 5;
+        Player.Instance.unitSpaces -= 5;
         base.Die();
     }
 }

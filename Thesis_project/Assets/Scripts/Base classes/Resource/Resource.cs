@@ -7,7 +7,6 @@ public class Resource : MonoBehaviour {
     public GameObject obj;
     protected int max_R_Amount;
     protected int current_R_Amount;
-    protected Player playerScript;
     protected ResourceType type;
 
     protected enum ResourceType {
@@ -15,8 +14,6 @@ public class Resource : MonoBehaviour {
     }
 
     protected virtual void Start() {
-        GameObject player = GameObject.Find("Player");
-        playerScript = player.GetComponent<Player>();
         max_R_Amount = 1000;
         current_R_Amount = max_R_Amount;
     }
@@ -34,13 +31,13 @@ public class Resource : MonoBehaviour {
     protected void GiveResource(int amount) {
         current_R_Amount -= amount;
         if (type == ResourceType.MONEY) {
-            playerScript.money += amount;
+            Player.Instance.money += amount;
         } 
         else if (type == ResourceType.LINEOFCODE) {
-            playerScript.linesOfCode += amount;
+            Player.Instance.linesOfCode += amount;
 
         } else {
-            playerScript.assets += amount;
+            Player.Instance.assets += amount;
         }
     }
 

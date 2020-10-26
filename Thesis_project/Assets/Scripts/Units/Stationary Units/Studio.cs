@@ -14,6 +14,22 @@ using UnityEngine.UI;
 
 public class Studio : StationaryUnit {
     
+    //Singleton pattern
+    private static Studio instance;
+    public static Studio Instance {
+        get {
+            return instance;
+        }
+    }
+
+    private void Awake() {
+        if (instance == null) {
+            instance = this;
+        } else {
+            Destroy(this);
+        }
+    }
+
     public Slider lvlUpBar;
     private int lvlUpTime;
     private int cLvlProgress;   // current level up progress
@@ -73,7 +89,7 @@ public class Studio : StationaryUnit {
                 cLvlProgress++;
             }
             if (cLvlProgress >= lvlUpTime) {
-                playerScript.baseLevel++;
+                Player.Instance.baseLevel++;
                 ResetLvlBar();
             }
         }

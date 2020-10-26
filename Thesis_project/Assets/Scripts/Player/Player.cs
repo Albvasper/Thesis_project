@@ -1,8 +1,30 @@
-﻿using System.Collections;
+﻿/*
+=============================================================================
+ *  Description: Class that manages the players resources, units and actions.
+=============================================================================
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
+    
+    //Singleton pattern
+    private static Player instance;
+    public static Player Instance { 
+        get { 
+            return instance; 
+        } 
+    }
+    
+    private void Awake() {
+        if (instance == null) {
+            instance = this;
+        } else {
+            Destroy(this);
+        }
+    }
 
     public int baseLevel;
     // Player resources
@@ -32,15 +54,19 @@ public class Player : MonoBehaviour {
     //     foreach (Unit unit in selectedUnits) {
     //         unit.selected = true;
     //     }
-        CheckSpaces();
+        BoundSpaces();
     }
 
-    private void CheckSpaces () {
-        if (unitSpaces < 0) {
-            unitSpaces = 0;
-        }
-        if (unitSpaces > maxUnitSpaces) {
-            unitSpaces = maxUnitSpaces;
-        }
+    private void BoundSpaces () {
+        // if (unitSpaces < 0) {
+        //     unitSpaces = 0;
+        // }
+        // if (unitSpaces > maxUnitSpaces) {
+        //     unitSpaces = maxUnitSpaces;
+        // }
+    }
+
+    public void AddSpaces(int amount) {
+        unitSpaces += amount;
     }
 }

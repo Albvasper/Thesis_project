@@ -1,9 +1,32 @@
-﻿using System.Collections;
+﻿/*
+=============================================================================
+ *  Description: Script that manages the camera movement ingame and cursor 
+ *  tracking.
+=============================================================================
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class CamController : MonoBehaviour {
+
+    //Singleton pattern
+    private static CamController instance;
+    public static CamController Instance {
+        get {
+            return instance;
+        }
+    }
+
+    private void Awake() {
+        if (instance == null) {
+            instance = this;
+        } else {
+            Destroy(this);
+        }
+    }
 
     private Camera mainCam;
     private float camVel;
