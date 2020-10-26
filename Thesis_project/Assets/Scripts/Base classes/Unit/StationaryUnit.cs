@@ -5,10 +5,10 @@ using UnityEngine;
 public class StationaryUnit : Unit {
 
     protected override void Start() {
-        
+        base.Start();
     }
  
     protected override void Update() {
-        
+        base.Update();
     }
 }

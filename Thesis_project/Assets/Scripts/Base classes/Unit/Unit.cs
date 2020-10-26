@@ -11,9 +11,13 @@ public class Unit : MonoBehaviour {
     protected int maxHP;
     protected int currentHP;
     protected List<Action> actions;
+    protected Player playerScript;
+    protected int level;
 
     protected virtual void Start() {
         actions = new List<Action>();
+        GameObject player = GameObject.Find("Player");
+        playerScript = player.GetComponent<Player>();
         selected = false;
         maxHP = 100;
         currentHP = maxHP;
@@ -23,6 +27,7 @@ public class Unit : MonoBehaviour {
     protected virtual void Update() {
         CheckHP();
         CheckSelected();
+        CheckLevel();
     }
 
     protected void CheckSelected() {
@@ -33,15 +38,22 @@ public class Unit : MonoBehaviour {
         currentHP -= dmg;
     }
 
-    protected void CheckHP() {
+    protected void CheckLevel() {
+        level = playerScript.baseLevel;
+        // Change unit look based on the player's base level
+    }
+
+    protected virtual void CheckHP() {
         healthBar.value = currentHP;
+        if (currentHP > maxHP) {
+            currentHP = maxHP;
+        }
         if (currentHP <= 0) {
             Die();
         }
     }
 
-    protected void Die() {
+    protected virtual void Die() {
         Destroy(obj);
     }
-
 }
