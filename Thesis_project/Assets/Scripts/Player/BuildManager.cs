@@ -1,0 +1,57 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BuildManager : MonoBehaviour { 
+
+    [SerializeField]
+    private GameObject placeableObjPreview;
+    private GameObject placeableObj;
+    private Vector3 offset;
+    private Grid grid;
+
+    private void Awake() {
+        grid = FindObjectOfType<Grid>();
+    }
+
+    private void Start() {
+        placeableObj = null;
+    }
+
+    private void Update() {
+        PreviewBuild();
+    }
+
+    private void TrackMouse() {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit)) {
+            var finalPos = grid.GetGridPoint(hit.point);
+            placeableObj.transform.position = finalPos + new Vector3(0, placeableObj.transform.localScale.y / 2, 0);
+            //placeableObj.transform.position = hit.point + new Vector3(0, placeableObj.transform.localScale.y / 2, 0);
+        }
+    }
+
+    private void PreviewBuild() {
+        if (Input.GetKeyDown(KeyCode.E)) {
+            if (placeableObj == null) {
+                placeableObj = Instantiate(placeableObjPreview);
+                placeableObj.layer = 2;
+            } else {
+                // Salir del modo construcción
+            }
+        }
+        if (placeableObj != null) {
+            TrackMouse();
+            Build();
+        }
+    }
+
+    private void Build() {
+        if (Input.GetMouseButtonDown(0)) {
+            placeableObj.layer = 0;
+            placeableObj = null;
+        }
+    }
+}
+   
