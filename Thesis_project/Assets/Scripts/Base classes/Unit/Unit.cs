@@ -28,7 +28,9 @@ public class Unit : MonoBehaviour {
     }
 
     protected void CheckSelected() {
+        if (selected == true) {
 
+        }
     }
     
     public void TakeDamage(int dmg) {
@@ -37,7 +39,7 @@ public class Unit : MonoBehaviour {
 
     protected void CheckLevel() {
         // Change unit look based on the player's base level
-        level = Player.Instance.baseLevel;
+        level = Player.Instance.GetBaseLvl();
     }
 
     protected virtual void CheckHP() {
@@ -52,5 +54,9 @@ public class Unit : MonoBehaviour {
 
     protected virtual void Die() {
         Destroy(obj);
+    }
+
+    public void SetSelect(bool b) {
+        selected = b;
     }
 }

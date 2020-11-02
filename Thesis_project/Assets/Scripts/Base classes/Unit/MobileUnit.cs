@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MobileUnit : Unit {
 
     protected float movementSpeed;
     protected State currentState;
-    protected Rigidbody rb;
+    protected NavMeshAgent agent;
 
     protected enum State {
         IDLE, WALKING, ATTACKING
@@ -14,11 +15,27 @@ public class MobileUnit : Unit {
 
     protected override void Start() {
         base.Start();
-        rb = GetComponent<Rigidbody>();
+        agent = GetComponent<NavMeshAgent>();
         currentState = State.IDLE;
     }
 
     protected override void Update() {
         base.Update();
+        CheckState();
+    }
+
+    protected void CheckState() {
+        if (currentState == State.IDLE) {
+            // IDLE Animation
+        }
+        else if (currentState == State.WALKING) {
+            // WALKING Animation
+        } else {
+            // ATTACKING Animation
+        }
+    }
+
+    public void MoveUnit(Vector3 point) {
+        agent.SetDestination(point);
     }
 }

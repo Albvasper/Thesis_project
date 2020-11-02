@@ -39,6 +39,7 @@ public class BuildManager : MonoBehaviour {
                 placeableObj.layer = 2;
             } else {
                 // Salir del modo construcción
+                Destroy(placeableObj);
             }
         }
         if (placeableObj != null) {

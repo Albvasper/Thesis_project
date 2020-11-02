@@ -6,7 +6,7 @@ public class House : StationaryUnit {
 
     protected override void Start() {
         base.Start();
-        Player.Instance.AddSpaces(5); // Only do this when the house is placed!!!
+        Player.Instance.AddUnitSpaces(5); // Only do this when the house is placed!!!
     }
 
     protected override void Update() {
@@ -26,7 +26,7 @@ public class House : StationaryUnit {
     }
 
     protected override void Die() {
-        Player.Instance.unitSpaces -= 5;
+        Player.Instance.SubstractUnitSpaces(5);
         base.Die();
     }
 }

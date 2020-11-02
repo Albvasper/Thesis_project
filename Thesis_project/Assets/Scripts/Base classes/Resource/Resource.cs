@@ -31,13 +31,13 @@ public class Resource : MonoBehaviour {
     protected void GiveResource(int amount) {
         current_R_Amount -= amount;
         if (type == ResourceType.MONEY) {
-            Player.Instance.money += amount;
+            Player.Instance.AddMoney(amount);
         } 
         else if (type == ResourceType.LINEOFCODE) {
-            Player.Instance.linesOfCode += amount;
+            Player.Instance.AddLinesOfCode(amount);
 
         } else {
-            Player.Instance.assets += amount;
+            Player.Instance.AddAssets(amount);
         }
     }
 

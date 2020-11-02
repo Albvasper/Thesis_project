@@ -89,7 +89,7 @@ public class Studio : StationaryUnit {
                 cLvlProgress++;
             }
             if (cLvlProgress >= lvlUpTime) {
-                Player.Instance.baseLevel++;
+                Player.Instance.AddBaseLvl();
                 ResetLvlBar();
             }
         }

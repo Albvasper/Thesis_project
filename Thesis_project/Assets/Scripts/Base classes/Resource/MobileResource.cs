@@ -6,7 +6,6 @@ public class MobileResource : Resource {
 
     protected float movementSpeed;
     protected State currentState;
-    protected Rigidbody rb;
 
     protected enum State {
         WANDERING, ATTACKING, ESCAPING
@@ -14,7 +13,6 @@ public class MobileResource : Resource {
 
     protected override void Start() {
         base.Start();
-        rb = GetComponent<Rigidbody>();
         currentState = State.WANDERING;
     }
 
