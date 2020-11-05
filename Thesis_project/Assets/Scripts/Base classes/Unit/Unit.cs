@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Unit : MonoBehaviour {
 
-    public GameObject obj;
     public Slider healthBar;
     protected bool selected;
     protected int maxHP;
@@ -53,7 +52,7 @@ public class Unit : MonoBehaviour {
     }
 
     protected virtual void Die() {
-        Destroy(obj);
+        Destroy(gameObject);
     }
 
     public void SetSelect(bool b) {

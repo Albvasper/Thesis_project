@@ -4,12 +4,25 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour { 
     
-    //private Vector3 pos;
-    //private int rows;
-    //private int cols;
+     //Singleton pattern
+    private static Grid instance;
+    public static Grid Instance { 
+        get { 
+            return instance; 
+        } 
+    }
+    
+    private void Awake() {
+        if (instance == null) {
+            instance = this;
+        } else {
+            Destroy(this);
+        }
+    }
+
     private float size;
 
-    private void Awake() {
+    private void Start() {
         size = 4f;
     }
 

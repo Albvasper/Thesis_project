@@ -7,6 +7,7 @@ public class MobileUnit : Unit {
 
     protected float movementSpeed;
     protected State currentState;
+    [SerializeField]
     protected NavMeshAgent agent;
 
     protected enum State {
@@ -15,7 +16,6 @@ public class MobileUnit : Unit {
 
     protected override void Start() {
         base.Start();
-        agent = GetComponent<NavMeshAgent>();
         currentState = State.IDLE;
     }
 

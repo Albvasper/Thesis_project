@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 7934980091352761901}
   - component: {fileID: 6644313954184511956}
   - component: {fileID: 577770905205846622}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: House
   m_TagString: Unit
   m_Icon: {fileID: 0}
@@ -442,7 +442,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0fba7fc2c6bc6d46b2fe01145930b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obj: {fileID: 577770905205846623}
   healthBar: {fileID: 577770904302750249}
 --- !u!1 &577770905804944313
 GameObject:

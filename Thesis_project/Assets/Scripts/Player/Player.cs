@@ -76,7 +76,6 @@ public class Player : MonoBehaviour {
     // Con control puede seleccionar mobile units
     // Con el click izquierdo puedes seleccionar solo una unit del tipo que sea
     // con el click derecho puedes decirle a donde ir a las unidades moviles seleccionadas
-
     // Con la cajita puedes seleccionar varias unidades moviles nada mas
 
     private void ClickOnUnit() {
@@ -88,7 +87,6 @@ public class Player : MonoBehaviour {
                     DeselectStationaryUnits();
                     // Select multiple mobile units (Only mobile units)
                     if (hit.collider.GetComponent<MobileUnit>() == true && selectedUnits.Contains(hit.collider.gameObject) == false) {
-                                                                                            // Bug: You can put the same object more than once!
                         hit.collider.GetComponent<MobileUnit>().SetSelect(true);
                         selectedUnits.Add(hit.collider.gameObject);
                     }

@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class BuildManager : MonoBehaviour { 
 
+    //Singleton pattern
+    private static BuildManager instance;
+    public static BuildManager Instance { 
+        get { 
+            return instance; 
+        } 
+    }
+    
+    private void Awake() {
+        if (instance == null) {
+            instance = this;
+        } else {
+            Destroy(this);
+        }
+    }
+
     [SerializeField]
     private GameObject placeableObjPreview;
     private GameObject placeableObj;
     private Vector3 offset;
-    private Grid grid;
-
-    private void Awake() {
-        grid = FindObjectOfType<Grid>();
-    }
 
     private void Start() {
         placeableObj = null;
@@ -26,7 +37,7 @@ public class BuildManager : MonoBehaviour {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
-            var finalPos = grid.GetGridPoint(hit.point);
+            var finalPos = Grid.Instance.GetGridPoint(hit.point);
             placeableObj.transform.position = finalPos + new Vector3(0, placeableObj.transform.localScale.y / 2, 0);
             //placeableObj.transform.position = hit.point + new Vector3(0, placeableObj.transform.localScale.y / 2, 0);
         }

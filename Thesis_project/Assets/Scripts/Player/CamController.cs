@@ -28,14 +28,12 @@ public class CamController : MonoBehaviour {
         }
     }
 
-    private Camera mainCam;
     private float camVel;
     private int zoomBounds;
     private float zoomRate;
     private Vector2 mousePos;
 
     private void Start() {
-        mainCam = GetComponent<Camera>();
         zoomBounds = 5;
         camVel = 0.05f;
         zoomRate = 4.0f;
@@ -80,19 +78,19 @@ public class CamController : MonoBehaviour {
     private void MoveCamera(string input) {
         switch (input) {
             case "up":
-                mainCam.transform.position = mainCam.transform.position + new Vector3(0, 0, camVel);
+                Camera.main.transform.position += new Vector3(0, 0, camVel);
             break;
 
             case "down":
-                mainCam.transform.position = mainCam.transform.position + new Vector3(0, 0, -camVel);
+                Camera.main.transform.position += new Vector3(0, 0, -camVel);
             break;
 
             case "left":
-                mainCam.transform.position = mainCam.transform.position + new Vector3(-camVel, 0, 0);
+                Camera.main.transform.position += new Vector3(-camVel, 0, 0);
             break;
 
             case "right":
-                mainCam.transform.position = mainCam.transform.position + new Vector3(camVel, 0, 0);
+                Camera.main.transform.position += new Vector3(camVel, 0, 0);
             break;
         }
     }
@@ -101,14 +99,14 @@ public class CamController : MonoBehaviour {
         // Camera zoom in 
         if (Input.GetAxis("Mouse ScrollWheel") > 0f) {
             if (zoomBounds > 1){
-                mainCam.transform.position = mainCam.transform.position + new Vector3(0, zoomRate, -zoomRate);
+                Camera.main.transform.position += new Vector3(0, zoomRate, -zoomRate);
                 zoomBounds--;
             } 
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0f) {
             // Camera zoom out
             if (zoomBounds < 10){
-                mainCam.transform.position = mainCam.transform.position + new Vector3(0, -zoomRate, zoomRate);
+                Camera.main.transform.position += new Vector3(0, -zoomRate, zoomRate);
                 zoomBounds++;
             } 
         }

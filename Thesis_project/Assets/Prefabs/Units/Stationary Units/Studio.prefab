@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 2896094735301875567}
   - component: {fileID: 5572173166006931156}
   - component: {fileID: 2896094735301875571}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Studio
   m_TagString: Unit
   m_Icon: {fileID: 0}
@@ -565,7 +565,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd50cda206f50564b88b17524b8e8542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obj: {fileID: 2896094735301875566}
   healthBar: {fileID: 2896094735266423439}
   lvlUpBar: {fileID: 2896094735123263882}
 --- !u!1 &2896094735620577169

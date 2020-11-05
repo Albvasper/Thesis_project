@@ -402,9 +402,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ac32603aa2af64eb602edd33761065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obj: {fileID: 402732348}
   healthBar: {fileID: 1267913681}
-  agent: {fileID: 0}
+  agent: {fileID: 402732350}
 --- !u!195 &402732350
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1917,9 +1916,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ac32603aa2af64eb602edd33761065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obj: {fileID: 1552862469}
   healthBar: {fileID: 1593660098}
-  agent: {fileID: 0}
+  agent: {fileID: 1552862471}
 --- !u!195 &1552862471
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2553,9 +2551,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ac32603aa2af64eb602edd33761065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obj: {fileID: 2112291938}
   healthBar: {fileID: 728102002}
-  agent: {fileID: 0}
+  agent: {fileID: 2112291944}
 --- !u!195 &2112291944
 NavMeshAgent:
   m_ObjectHideFlags: 0

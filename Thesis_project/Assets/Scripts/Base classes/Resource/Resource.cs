@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Resource : MonoBehaviour {
 
-    public GameObject obj;
     protected int max_R_Amount;
     protected int current_R_Amount;
     protected ResourceType type;
@@ -42,6 +41,6 @@ public class Resource : MonoBehaviour {
     }
 
     private void Delete() {
-        Destroy(obj);
+        Destroy(gameObject);
     }
 }
