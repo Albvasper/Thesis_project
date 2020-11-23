@@ -101,4 +101,14 @@ public class Studio : StationaryUnit {
         lvlUpBar.gameObject.SetActive(false);
         time = 0;
     }
+
+    public void ReceiveResource(Developer dev) {
+        if (dev.GetResourceType() == "MONEY") {
+            Player.Instance.AddMoney(dev.GiveResource());
+        } else if (dev.GetResourceType() == "LINEOFCODE") {
+            Player.Instance.AddLinesOfCode(dev.GiveResource());
+        } else {
+            Player.Instance.AddAssets(dev.GiveResource());
+        }
+    }
 }

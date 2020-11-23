@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MobileResource : Resource {
 
-    protected float movementSpeed;
     protected State currentState;
 
     protected enum State {

@@ -13,34 +13,43 @@ public class Resource : MonoBehaviour {
     }
 
     protected virtual void Start() {
-        max_R_Amount = 1000;
+        max_R_Amount = 21;
         current_R_Amount = max_R_Amount;
     }
 
     protected virtual void Update() {
-        CheckQuantity();
     }
 
-    protected void CheckQuantity() {
+    public void CheckQuantity() {
         if (current_R_Amount <= 0) {
             Delete();
         }
     }
 
-    protected void GiveResource(int amount) {
+    public int GiveResource(int amount) {
         current_R_Amount -= amount;
+        int result = amount;
+        if (current_R_Amount < 0) {
+            result = amount + current_R_Amount;
+            return result;
+        } else {
+            return result;
+        }
+    }
+
+    public string GetResourceType() {
         if (type == ResourceType.MONEY) {
-            Player.Instance.AddMoney(amount);
+            return "MONEY";
         } 
         else if (type == ResourceType.LINEOFCODE) {
-            Player.Instance.AddLinesOfCode(amount);
-
+            return "LINEOFCODE";
         } else {
-            Player.Instance.AddAssets(amount);
+            return "ASSET";
         }
     }
 
     private void Delete() {
         Destroy(gameObject);
     }
+    
 }

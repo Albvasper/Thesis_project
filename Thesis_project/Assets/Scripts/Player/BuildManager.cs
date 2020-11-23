@@ -24,9 +24,11 @@ public class BuildManager : MonoBehaviour {
     private GameObject placeableObjPreview;
     private GameObject placeableObj;
     private Vector3 offset;
-
+    private Camera mainCam;
+    
     private void Start() {
         placeableObj = null;
+        mainCam = Camera.main;
     }
 
     private void Update() {
@@ -34,7 +36,7 @@ public class BuildManager : MonoBehaviour {
     }
 
     private void TrackMouse() {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
             var finalPos = Grid.Instance.GetGridPoint(hit.point);

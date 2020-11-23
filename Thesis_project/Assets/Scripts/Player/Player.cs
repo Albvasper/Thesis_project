@@ -26,29 +26,23 @@ public class Player : MonoBehaviour {
         }
     }
 
-    [SerializeField]
+    private Camera mainCam;
     private int baseLevel;
     // Player resources
-    [SerializeField]
     private int money;
-    [SerializeField]
     private int assets;
-    [SerializeField]
     private int linesOfCode;
     // Player units
-    [SerializeField]
     private List<GameObject> units;
-    [SerializeField]
     private List<GameObject> selectedUnits;
-    [SerializeField]
     private int unitSpaces;
-    [SerializeField]
     private int maxUnitSpaces;
     // Nav mesh
     //public NavMeshSurface navMeshSurface;
     //navMeshSurface.BuildNavMesh; METHOD THAT REBAKES THE MESH!!!!!!!!!!!!!!
     
     private void Start() {
+        mainCam = Camera.main;
         baseLevel = 1;
         money = 0;
         assets = 0;
@@ -61,7 +55,6 @@ public class Player : MonoBehaviour {
 
     private void Update() {
         BoundSpaces();
-        ClickOnUnit();
     }
 
     private void BoundSpaces () {
@@ -71,61 +64,6 @@ public class Player : MonoBehaviour {
         if (unitSpaces > maxUnitSpaces) {
             unitSpaces = maxUnitSpaces;
         }
-    }
-
-    // Con control puede seleccionar mobile units
-    // Con el click izquierdo puedes seleccionar solo una unit del tipo que sea
-    // con el click derecho puedes decirle a donde ir a las unidades moviles seleccionadas
-    // Con la cajita puedes seleccionar varias unidades moviles nada mas
-
-    private void ClickOnUnit() {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Input.GetMouseButtonDown(0)) {
-            if (Physics.Raycast(ray, out hit)) {
-                if (Input.GetKey(KeyCode.LeftControl)) {
-                    DeselectStationaryUnits();
-                    // Select multiple mobile units (Only mobile units)
-                    if (hit.collider.GetComponent<MobileUnit>() == true && selectedUnits.Contains(hit.collider.gameObject) == false) {
-                        hit.collider.GetComponent<MobileUnit>().SetSelect(true);
-                        selectedUnits.Add(hit.collider.gameObject);
-                    }
-                } else {
-                    DeselectUnits();
-                    // Select only one unit (Of any type)
-                    if (hit.collider.GetComponent<Unit>() == true) {
-                        hit.collider.GetComponent<Unit>().SetSelect(true);
-                        selectedUnits.Add(hit.collider.gameObject);
-                    }
-                }
-            }
-        }
-        else if (Input.GetMouseButtonDown(1)) {
-            if (Physics.Raycast(ray, out hit)) { 
-                // Move mobile units that are selected
-                foreach (GameObject mobileUnit in selectedUnits){
-                    if (mobileUnit.GetComponent<MobileUnit>() == true) { 
-                        mobileUnit.GetComponent<MobileUnit>().MoveUnit(hit.point);
-                    }
-                }
-            }
-        }
-    }
-
-    private void DeselectStationaryUnits() {
-        for (int i = 0; i < selectedUnits.Count; i++) {
-             if (selectedUnits[i].GetComponent<StationaryUnit>() == true) { 
-                selectedUnits[i].GetComponent<StationaryUnit>().SetSelect(false);
-                selectedUnits.Remove(selectedUnits[i]);
-            }
-        }
-    }
-
-    private void DeselectUnits() {
-        foreach (GameObject unit in selectedUnits) {
-            unit.GetComponent<Unit>().SetSelect(false);
-        }
-        selectedUnits.Clear();
     }
 
     public void AddBaseLvl() {
@@ -154,5 +92,9 @@ public class Player : MonoBehaviour {
 
     public void SubstractUnitSpaces(int amount) {
         unitSpaces -= amount;
+    }
+
+    public List<GameObject> GetSelectedUnits() {
+        return selectedUnits;
     }
 }

@@ -5,37 +5,39 @@ using UnityEngine.AI;
 
 public class MobileUnit : Unit {
 
-    protected float movementSpeed;
     protected State currentState;
     [SerializeField]
     protected NavMeshAgent agent;
 
-    protected enum State {
-        IDLE, WALKING, ATTACKING
-    }
-
     protected override void Start() {
         base.Start();
-        currentState = State.IDLE;
+        SetState(new IDLE_State(this));
     }
 
     protected override void Update() {
         base.Update();
-        CheckState();
+        currentState.Update();
     }
 
-    protected void CheckState() {
-        if (currentState == State.IDLE) {
-            // IDLE Animation
+    public void SetState(State state) {
+        if (currentState != null) {
+            // Get out of the current state
+            currentState.OnStateExit();
         }
-        else if (currentState == State.WALKING) {
-            // WALKING Animation
-        } else {
-            // ATTACKING Animation
+        // Replace current state with new state
+        currentState = state;
+        Debug.Log("current state: " + state.GetType().Name);
+        if (currentState != null) {
+            // Initialize new state
+            currentState.OnStateEnter();
         }
     }
 
     public void MoveUnit(Vector3 point) {
         agent.SetDestination(point);
+    }
+
+    public NavMeshAgent GetAgent() {
+        return agent;
     }
 }
