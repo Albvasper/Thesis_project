@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
     
-    //Singleton pattern
+    #region Singleton Pattern
     private static Player instance;
     public static Player Instance { 
         get { 
@@ -24,8 +24,10 @@ public class Player : MonoBehaviour {
         } else {
             Destroy(this);
         }
+        
     }
-
+    #endregion
+    
     private Camera mainCam;
     private int baseLevel;
     // Player resources
@@ -33,8 +35,8 @@ public class Player : MonoBehaviour {
     private int assets;
     private int linesOfCode;
     // Player units
-    private List<GameObject> units;
-    private List<GameObject> selectedUnits;
+    private List<GameObject> mobileUnits = new List<GameObject>();
+    private List<GameObject> selectedUnits = new List<GameObject>();
     private int unitSpaces;
     private int maxUnitSpaces;
     // Nav mesh
@@ -47,14 +49,12 @@ public class Player : MonoBehaviour {
         money = 0;
         assets = 0;
         linesOfCode = 0;
-        units = new List<GameObject>();
-        selectedUnits = new List<GameObject>();
         unitSpaces = 5;
         maxUnitSpaces = 300;
     }
 
     private void Update() {
-        BoundSpaces();
+        //BoundSpaces();
     }
 
     private void BoundSpaces () {
@@ -96,5 +96,13 @@ public class Player : MonoBehaviour {
 
     public List<GameObject> GetSelectedUnits() {
         return selectedUnits;
+    }
+
+    public List<GameObject> GetMobileUnits() {
+        return mobileUnits;
+    }
+
+    public void AddMobileUnit(GameObject unit) {
+        mobileUnits.Add(unit);
     }
 }

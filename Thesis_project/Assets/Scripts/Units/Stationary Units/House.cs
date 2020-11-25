@@ -11,7 +11,6 @@ public class House : StationaryUnit {
 
     protected override void Update() {
         CheckHP();
-        CheckSelected();
         CheckLevel();
     }    
 

@@ -12,7 +12,7 @@ using UnityEngine.EventSystems;
 
 public class CamController : MonoBehaviour {
 
-    //Singleton pattern
+    #region Singleton Pattern
     private static CamController instance;
     public static CamController Instance {
         get {
@@ -27,7 +27,8 @@ public class CamController : MonoBehaviour {
             Destroy(this);
         }
     }
-
+    #endregion
+    
     private float camVel;
     private int zoomBounds;
     private float zoomRate;

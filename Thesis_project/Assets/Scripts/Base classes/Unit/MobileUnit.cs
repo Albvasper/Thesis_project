@@ -12,6 +12,7 @@ public class MobileUnit : Unit {
     protected override void Start() {
         base.Start();
         SetState(new IDLE_State(this));
+        Player.Instance.AddMobileUnit(gameObject);
     }
 
     protected override void Update() {

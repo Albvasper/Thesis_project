@@ -22,6 +22,8 @@ public class UnitController : MonoBehaviour {
     #endregion
 
     private Camera mainCam;
+    public RectTransform selectionBox;
+    private Vector2 selectA;
 
     private void Start() {
         mainCam = Camera.main;
@@ -38,34 +40,41 @@ public class UnitController : MonoBehaviour {
         Unit unit_Script;
         Developer dev_Script;
     
-        // Con control puede seleccionar mobile units
-        // Con el click izquierdo puedes seleccionar solo una unit del tipo que sea
-        // con el click derecho puedes decirle a donde ir a las unidades moviles seleccionadas
-        // Con la cajita puedes seleccionar varias unidades moviles nada mas
-        
         if (Input.GetMouseButtonDown(0)) {
+            selectA = Input.mousePosition;
             if (Physics.Raycast(ray, out hit)) {
                 if (Input.GetKey(KeyCode.LeftControl)) {
                     DeselectStationaryUnits();
                     mobileUnit_Script = hit.collider.GetComponent<MobileUnit>();
                     // Select multiple mobile units (Only mobile units)
-                    if (mobileUnit_Script == true && Player.Instance.GetSelectedUnits().Contains(hit.collider.gameObject) == false) {
-                        mobileUnit_Script.SetSelect(true);
-                        Player.Instance.GetSelectedUnits().Add(hit.collider.gameObject);
+                    if (mobileUnit_Script == true) {
+                        if (Player.Instance.GetSelectedUnits().Contains(hit.collider.gameObject) == false) {
+                            mobileUnit_Script.Select();
+                            Player.Instance.GetSelectedUnits().Add(hit.collider.gameObject);
+                        } else {
+                            mobileUnit_Script.Deselect();
+                            Player.Instance.GetSelectedUnits().Remove(hit.collider.gameObject);
+                        }
                     }
                 } else {
                     DeselectUnits();
                     unit_Script = hit.collider.GetComponent<Unit>();
                     // Select only one unit (Of any type)
                     if (unit_Script == true) {
-                        unit_Script.SetSelect(true);
+                        unit_Script.Select();
                         Player.Instance.GetSelectedUnits().Add(hit.collider.gameObject);
                     }
                 }
             }
         }
+        else if (Input.GetMouseButton(0)) {
+            ResizeSelectionBox(Input.mousePosition);
+        }
+        else if (Input.GetMouseButtonUp(0)) {
+            ReleaseSelectionBox();
+        }
         else if (Input.GetMouseButtonDown(1)) {
-            if (Physics.Raycast(ray, out hit)) { 
+            if (Physics.Raycast(ray, out hit)) {
                 // Move mobile units that are selected
                 foreach (GameObject unit in Player.Instance.GetSelectedUnits()) {
                     mobileUnit_Script = unit.GetComponent<MobileUnit>();
@@ -77,6 +86,9 @@ public class UnitController : MonoBehaviour {
                             if (dev_Script == true) {
                                 dev_Script.SetState(new GoingToFarm_State(dev_Script, hit.collider.GetComponent<StationaryResource>()));
                             }
+                        }
+                        else if (hit.collider.tag == "Unit") {
+                            mobileUnit_Script.SetState(new ApproachingEnemy_State(mobileUnit_Script, hit.collider.GetComponent<Unit>()));
                         } else {
                             mobileUnit_Script.SetState(new Walking_State(mobileUnit_Script, hit.point));
                         }
@@ -92,7 +104,7 @@ public class UnitController : MonoBehaviour {
         for (int i = 0; i < Player.Instance.GetSelectedUnits().Count; i++) {
             stationaryUnit_Script = Player.Instance.GetSelectedUnits()[i].GetComponent<StationaryUnit>();
             if (stationaryUnit_Script == true) { 
-                stationaryUnit_Script.SetSelect(false);
+                stationaryUnit_Script.Deselect();
                 Player.Instance.GetSelectedUnits().Remove(Player.Instance.GetSelectedUnits()[i]);
             }
         }
@@ -100,8 +112,32 @@ public class UnitController : MonoBehaviour {
 
     private void DeselectUnits() {
         foreach (GameObject unit in Player.Instance.GetSelectedUnits()) {
-            unit.GetComponent<Unit>().SetSelect(false);
+            unit.GetComponent<Unit>().Deselect();
         }
         Player.Instance.GetSelectedUnits().Clear();
+    }
+
+    private void ResizeSelectionBox(Vector2 mousePos) {
+        selectionBox.gameObject.SetActive(true);
+        float w = mousePos.x - selectA.x;
+        float h = mousePos.y - selectA.y;
+        selectionBox.sizeDelta = new Vector2(Mathf.Abs(w), Mathf.Abs(h));
+        selectionBox.anchoredPosition = selectA + new Vector2(w / 2, h / 2);
+    }
+
+    private void ReleaseSelectionBox() {
+        selectionBox.gameObject.SetActive(false);
+        Vector2 min = selectionBox.anchoredPosition - (selectionBox.sizeDelta / 2);
+        Vector2 max = selectionBox.anchoredPosition + (selectionBox.sizeDelta / 2);
+        foreach (GameObject unit in Player.Instance.GetMobileUnits()) {
+            MobileUnit mobileUnit_Script = unit.GetComponent<MobileUnit>();
+            Vector3 screenPos = mainCam.WorldToScreenPoint(unit.transform.position);
+            if (screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y) {
+                if (Player.Instance.GetSelectedUnits().Contains(unit) == false) {
+                    mobileUnit_Script.Select();
+                    Player.Instance.GetSelectedUnits().Add(unit);
+                }
+            }
+        }
     }
 }

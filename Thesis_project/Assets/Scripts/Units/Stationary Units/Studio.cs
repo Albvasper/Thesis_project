@@ -14,7 +14,7 @@ using UnityEngine.UI;
 
 public class Studio : StationaryUnit {
     
-    //Singleton pattern
+    #region Singleton pattern
     private static Studio instance;
     public static Studio Instance {
         get {
@@ -29,7 +29,8 @@ public class Studio : StationaryUnit {
             Destroy(this);
         }
     }
-
+    #endregion
+    
     public Slider lvlUpBar;
     private int lvlUpTime;
     private int cLvlProgress;   // current level up progress
@@ -52,7 +53,6 @@ public class Studio : StationaryUnit {
 
     protected override void Update() {
         CheckHP();
-        CheckSelected();
         LevelUpStudio();
     }
 

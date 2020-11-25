@@ -6,32 +6,33 @@ using UnityEngine.UI;
 public class Unit : MonoBehaviour {
 
     public Slider healthBar;
+    [SerializeField]
+    protected GameObject selectionSprite;
     protected bool selected;
     protected int maxHP;
     protected int currentHP;
     protected List<Action> actions;
     protected int level;
-
+    protected int attackDamage;
+    
     protected virtual void Start() {
         actions = new List<Action>();
         selected = false;
         maxHP = 100;
         currentHP = maxHP;
         healthBar.maxValue = maxHP;
+        attackDamage = 25;
     }
 
     protected virtual void Update() {
         CheckHP();
-        CheckSelected();
         CheckLevel();
     }
 
-    protected void CheckSelected() {
-        if (selected == true) {
-
-        }
+    public void Attack(Unit enemyUnit) {
+        enemyUnit.TakeDamage(attackDamage);
     }
-    
+
     public void TakeDamage(int dmg) {
         currentHP -= dmg;
     }
@@ -52,10 +53,17 @@ public class Unit : MonoBehaviour {
     }
 
     protected virtual void Die() {
+        Player.Instance.GetMobileUnits().Remove(gameObject);    // Only do this on mobile units
         Destroy(gameObject);
     }
 
-    public void SetSelect(bool b) {
-        selected = b;
+    public void Select() {
+        selected = true;
+        selectionSprite.SetActive(true);
+    }
+
+    public void Deselect() {
+        selected = false;
+        selectionSprite.SetActive(false);
     }
 }

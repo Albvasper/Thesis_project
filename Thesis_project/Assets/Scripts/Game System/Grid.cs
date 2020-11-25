@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour { 
     
-     //Singleton pattern
+    #region Singleton Pattern
     private static Grid instance;
     public static Grid Instance { 
         get { 
@@ -19,6 +19,7 @@ public class Grid : MonoBehaviour {
             Destroy(this);
         }
     }
+    #endregion
 
     private float size;
 

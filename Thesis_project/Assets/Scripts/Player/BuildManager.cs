@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuildManager : MonoBehaviour { 
 
-    //Singleton pattern
+    #region Singleton Pattern
     private static BuildManager instance;
     public static BuildManager Instance { 
         get { 
@@ -19,6 +19,7 @@ public class BuildManager : MonoBehaviour {
             Destroy(this);
         }
     }
+    #endregion
 
     [SerializeField]
     private GameObject placeableObjPreview;
