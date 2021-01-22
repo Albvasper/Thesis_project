@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StationaryUnit : Unit {
+public abstract class StationaryUnit : Unit {
 
     protected override void Start() {
         base.Start();
@@ -10,5 +10,9 @@ public class StationaryUnit : Unit {
  
     protected override void Update() {
         base.Update();
+    }
+
+    protected override void Die() {
+        Destroy(gameObject);
     }
 }

@@ -87,7 +87,7 @@ public class UnitController : MonoBehaviour {
                                 dev_Script.SetState(new GoingToFarm_State(dev_Script, hit.collider.GetComponent<StationaryResource>()));
                             }
                         }
-                        else if (hit.collider.tag == "Unit") {
+                        else if (hit.collider.tag == "Enemy Unit") {
                             mobileUnit_Script.SetState(new ApproachingEnemy_State(mobileUnit_Script, hit.collider.GetComponent<Unit>()));
                         } else {
                             mobileUnit_Script.SetState(new Walking_State(mobileUnit_Script, hit.point));
@@ -111,8 +111,8 @@ public class UnitController : MonoBehaviour {
     }
 
     private void DeselectUnits() {
-        foreach (GameObject unit in Player.Instance.GetSelectedUnits()) {
-            unit.GetComponent<Unit>().Deselect();
+        for (int i = 0; i < Player.Instance.GetSelectedUnits().Count; i++) {
+            Player.Instance.GetSelectedUnits()[i].GetComponent<Unit>().Deselect();
         }
         Player.Instance.GetSelectedUnits().Clear();
     }

@@ -14,16 +14,6 @@ public class House : StationaryUnit {
         CheckLevel();
     }    
 
-    protected override void CheckHP() {
-        healthBar.value = currentHP;
-        if (currentHP > maxHP) {
-            currentHP = maxHP;
-        }
-        if (currentHP <= 0) {
-            Die();
-        }
-    }
-
     protected override void Die() {
         Player.Instance.SubstractUnitSpaces(5);
         base.Die();

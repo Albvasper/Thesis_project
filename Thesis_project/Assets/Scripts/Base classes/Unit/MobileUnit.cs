@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MobileUnit : Unit {
+public abstract class MobileUnit : Unit {
 
     protected State currentState;
     [SerializeField]
@@ -27,7 +27,7 @@ public class MobileUnit : Unit {
         }
         // Replace current state with new state
         currentState = state;
-        Debug.Log("current state: " + state.GetType().Name);
+        //Debug.Log("current state: " + state.GetType().Name);
         if (currentState != null) {
             // Initialize new state
             currentState.OnStateEnter();
@@ -40,5 +40,11 @@ public class MobileUnit : Unit {
 
     public NavMeshAgent GetAgent() {
         return agent;
+    }
+
+    protected override void Die() {
+        Player.Instance.GetMobileUnits().Remove(gameObject);
+        Player.Instance.GetSelectedUnits().Remove(gameObject);
+        Destroy(gameObject);
     }
 }

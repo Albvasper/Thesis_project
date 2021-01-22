@@ -19,7 +19,7 @@ public class Attacking_State : State {
     public override void Update() {
         attackCoolDown -= Time.deltaTime;
         if (enemyUnit != null) {
-            if(attackCoolDown <= 0f){
+            if (attackCoolDown <= 0f){
                 mobileUnit.Attack(enemyUnit);
                 attackCoolDown = 1f;
             }

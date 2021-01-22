@@ -56,13 +56,6 @@ public class Studio : StationaryUnit {
         LevelUpStudio();
     }
 
-    protected override void CheckHP() { 
-        healthBar.value = currentHP;
-        if (currentHP <= 0) {
-            Die();
-        }
-    }
-
     protected override void Die() {
         Debug.Log("Died!");
         //SceneManager.LoadScene("Ending_4");

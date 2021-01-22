@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Unit : MonoBehaviour {
+public abstract class Unit : MonoBehaviour {
 
     public Slider healthBar;
     [SerializeField]
@@ -42,7 +42,7 @@ public class Unit : MonoBehaviour {
         level = Player.Instance.GetBaseLvl();
     }
 
-    protected virtual void CheckHP() {
+    protected void CheckHP() {
         healthBar.value = currentHP;
         if (currentHP > maxHP) {
             currentHP = maxHP;
@@ -52,10 +52,7 @@ public class Unit : MonoBehaviour {
         }
     }
 
-    protected virtual void Die() {
-        Player.Instance.GetMobileUnits().Remove(gameObject);    // Only do this on mobile units
-        Destroy(gameObject);
-    }
+    protected abstract void Die();
 
     public void Select() {
         selected = true;
