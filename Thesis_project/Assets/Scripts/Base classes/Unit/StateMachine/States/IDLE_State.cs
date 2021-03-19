@@ -11,6 +11,7 @@ public class IDLE_State : State {
     }
 
     public override void OnStateEnter() {
+        Player.Instance.GetIdleUnits().Add(mobileUnit.gameObject);
         mobileUnit.GetAgent().isStopped = true;
     }
 
@@ -18,6 +19,7 @@ public class IDLE_State : State {
     }
 
     public override void OnStateExit() {
+        Player.Instance.GetIdleUnits().Remove(mobileUnit.gameObject);
         mobileUnit.GetAgent().isStopped = false;
     }
 }

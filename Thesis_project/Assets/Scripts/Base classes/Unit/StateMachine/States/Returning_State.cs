@@ -6,20 +6,20 @@ public class Returning_State : State {
 
     private float studioProximity;
 
-    public Returning_State(Developer developer) : base(developer) {
+    public Returning_State(Intern intern) : base(intern) {
         studioProximity = 12f;
     }
 
     public override void Update() {
-        /* Main Loop: The developer will head to the Studio until it gets there.*/
-        developer.MoveUnit(Studio.Instance.transform.position);
-        if (Vector3.Distance(developer.transform.position, Studio.Instance.transform.position) < studioProximity) {
-            Studio.Instance.ReceiveResource(developer);
+        /* Main Loop: The intern will head to the Studio until it gets there.*/
+        intern.MoveUnit(Studio.Instance.transform.position);
+        if (Vector3.Distance(intern.transform.position, Studio.Instance.transform.position) < studioProximity) {
+            Studio.Instance.ReceiveResource(intern);
             // Change state to return to resource
-            if (developer.GetCurrentResource() == null) {
-                developer.SetState(new IDLE_State(developer));
+            if (intern.GetCurrentResource() == null) {
+                intern.SetState(new IDLE_State(intern));
             } else {
-                developer.SetState(new GoingToFarm_State(developer, developer.GetCurrentResource()));
+                intern.SetState(new GoingToFarm_State(intern, intern.GetCurrentResource()));
             }
         }
     }

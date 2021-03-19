@@ -45,6 +45,7 @@ public abstract class MobileUnit : Unit {
     protected override void Die() {
         Player.Instance.GetMobileUnits().Remove(gameObject);
         Player.Instance.GetSelectedUnits().Remove(gameObject);
+        Player.Instance.GetIdleUnits().Remove(gameObject);
         Destroy(gameObject);
     }
 }

@@ -52,7 +52,7 @@ public class Studio : StationaryUnit {
     }
 
     protected override void Update() {
-        CheckHP();
+        base.Update(); 
         LevelUpStudio();
     }
 
@@ -61,18 +61,12 @@ public class Studio : StationaryUnit {
         //SceneManager.LoadScene("Ending_4");
     }
 
-    public void GenerateDev() {
-        // Spawn neutral dev
-        // Condition logic (if the player has enough resources)
-
-    }
-
     public void InitLvlUp() {
         // Condition logic (if the player has enough resources, if its alread at max lvl, etc.)
         lvlUpStudio = true;
     }
 
-    private void LevelUpStudio() {
+    public void LevelUpStudio() {
         if (lvlUpStudio == true) {
             lvlUpBar.gameObject.SetActive(true);
             time += Time.deltaTime;
@@ -87,7 +81,7 @@ public class Studio : StationaryUnit {
             }
         }
     }
-
+    
     private void ResetLvlBar() {
         lvlUpStudio = false;
         cLvlProgress = 0;
@@ -95,13 +89,17 @@ public class Studio : StationaryUnit {
         time = 0;
     }
 
-    public void ReceiveResource(Developer dev) {
-        if (dev.GetResourceType() == "MONEY") {
-            Player.Instance.AddMoney(dev.GiveResource());
-        } else if (dev.GetResourceType() == "LINEOFCODE") {
-            Player.Instance.AddLinesOfCode(dev.GiveResource());
+    public bool IsUpgrading() {
+        return lvlUpStudio;    
+    }
+
+    public void ReceiveResource(Intern intern) {
+        if (intern.GetResourceType() == "MONEY") {
+            Player.Instance.AddMoney(intern.GiveResource());
+        } else if (intern.GetResourceType() == "LINEOFCODE") {
+            Player.Instance.AddLinesOfCode(intern.GiveResource());
         } else {
-            Player.Instance.AddAssets(dev.GiveResource());
+            Player.Instance.AddAssets(intern.GiveResource());
         }
     }
 }

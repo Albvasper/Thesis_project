@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+ using UnityEngine.EventSystems;
 
 public class UnitController : MonoBehaviour {
 
@@ -24,7 +26,13 @@ public class UnitController : MonoBehaviour {
     private Camera mainCam;
     public RectTransform selectionBox;
     private Vector2 selectA;
-
+    [SerializeField] private GameObject unitPropertiesWindow;
+    [SerializeField] private Text unitPropertiesWindowNameField;
+    [SerializeField] private GameObject unitCredentialPanel;
+    [SerializeField] private GameObject stationaryPropertiesPanel;
+    [SerializeField] private List<GameObject> TaskListsForUnits = new List<GameObject>();
+    [SerializeField] private EventSystem eventSystem;
+    
     private void Start() {
         mainCam = Camera.main;
     }
@@ -38,7 +46,7 @@ public class UnitController : MonoBehaviour {
         RaycastHit hit;
         MobileUnit mobileUnit_Script;
         Unit unit_Script;
-        Developer dev_Script;
+        Intern intern_Script;
     
         if (Input.GetMouseButtonDown(0)) {
             selectA = Input.mousePosition;
@@ -57,11 +65,29 @@ public class UnitController : MonoBehaviour {
                         }
                     }
                 } else {
-                    DeselectUnits();
+                    if (eventSystem.IsPointerOverGameObject() == false) { 
+                        DeselectUnits();
+                    }
                     unit_Script = hit.collider.GetComponent<Unit>();
                     // Select only one unit (Of any type)
                     if (unit_Script == true) {
                         unit_Script.Select();
+                        // Modify unit properties window fields
+                        unitPropertiesWindowNameField.text = hit.collider.name;
+                        unitPropertiesWindow.SetActive(true);
+                        // Hide unit properties window
+                        unitCredentialPanel.SetActive(false);
+                        stationaryPropertiesPanel.SetActive(false);
+                        // Check unit type
+                        mobileUnit_Script = hit.collider.GetComponent<MobileUnit>();
+                        StationaryUnit stationaryUnit_Script = hit.collider.GetComponent<StationaryUnit>();
+                        ShowUnitTaskList(unit_Script);
+                        if (mobileUnit_Script == true) {
+                            unitCredentialPanel.SetActive(true);
+                        } 
+                        else if (stationaryUnit_Script == true) {
+                            stationaryPropertiesPanel.SetActive(true);
+                        }
                         Player.Instance.GetSelectedUnits().Add(hit.collider.gameObject);
                     }
                 }
@@ -80,11 +106,11 @@ public class UnitController : MonoBehaviour {
                     mobileUnit_Script = unit.GetComponent<MobileUnit>();
                     if (mobileUnit_Script == true) { 
                         if (hit.collider.tag == "Resource") {
-                            dev_Script = unit.GetComponent<Developer>();
+                            intern_Script = unit.GetComponent<Intern>();
                             /* If units are selected and the player clicks a resource, 
                             the unit will start the farming routine */
-                            if (dev_Script == true) {
-                                dev_Script.SetState(new GoingToFarm_State(dev_Script, hit.collider.GetComponent<StationaryResource>()));
+                            if (intern_Script == true) {
+                                intern_Script.SetState(new GoingToFarm_State(intern_Script, hit.collider.GetComponent<StationaryResource>()));
                             }
                         }
                         else if (hit.collider.tag == "Enemy Unit") {
@@ -95,6 +121,9 @@ public class UnitController : MonoBehaviour {
                     }
                 }
             }
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape)) {
+            DeselectUnits();
         }
     }
 
@@ -114,6 +143,7 @@ public class UnitController : MonoBehaviour {
         for (int i = 0; i < Player.Instance.GetSelectedUnits().Count; i++) {
             Player.Instance.GetSelectedUnits()[i].GetComponent<Unit>().Deselect();
         }
+        unitPropertiesWindow.SetActive(false);
         Player.Instance.GetSelectedUnits().Clear();
     }
 
@@ -137,6 +167,24 @@ public class UnitController : MonoBehaviour {
                     mobileUnit_Script.Select();
                     Player.Instance.GetSelectedUnits().Add(unit);
                 }
+            }
+        }
+    }
+
+    private void ShowUnitTaskList(Unit unit) {
+        foreach (GameObject go in TaskListsForUnits) {
+            go.SetActive(false);
+        }
+
+        if (unit.gameObject.layer == 9) {
+            // If unit is stationary unit
+            if (unit.GetComponent<Studio>() == true) {
+                TaskListsForUnits[0].SetActive(true);
+            }
+        } else if (unit.gameObject.layer == 8) {
+            // If unit is mobile unit
+            if (unit.GetComponent<Intern>() == true) {
+                TaskListsForUnits[1].SetActive(true);
             }
         }
     }

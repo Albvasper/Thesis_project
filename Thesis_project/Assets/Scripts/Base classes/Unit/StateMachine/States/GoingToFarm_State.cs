@@ -6,21 +6,21 @@ public class GoingToFarm_State : State {
 
     private float resourceProximity;
 
-    public GoingToFarm_State(Developer developer, StationaryResource currentRes) : base(developer) {
-        developer.SetCurrentResource(currentRes);
+    public GoingToFarm_State(Intern intern, StationaryResource currentRes) : base(intern) {
+        intern.SetCurrentResource(currentRes);
         resourceProximity = 5f;
     }
     
     public override void Update() {
         // Main Loop: Go to resource until something happens
-        if (developer.GetCurrentResource() != null) {
-            developer.MoveUnit(developer.GetCurrentResource().transform.position);
-            if (Vector3.Distance(developer.transform.position, developer.GetCurrentResource().transform.position) < resourceProximity) {
+        if (intern.GetCurrentResource() != null) {
+            intern.MoveUnit(intern.GetCurrentResource().transform.position);
+            if (Vector3.Distance(intern.transform.position, intern.GetCurrentResource().transform.position) < resourceProximity) {
                 // Change state to return to base
-                developer.SetState(new Farming_State(developer));
+                intern.SetState(new Farming_State(intern));
             }
         } else {
-            developer.SetState(new IDLE_State(developer));
+            intern.SetState(new IDLE_State(intern));
         }
     }
 }

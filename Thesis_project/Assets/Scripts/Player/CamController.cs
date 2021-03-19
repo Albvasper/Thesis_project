@@ -37,7 +37,7 @@ public class CamController : MonoBehaviour {
 
     private void Start() {
         zoomBounds = 5;
-        camVel = 0.05f;
+        camVel = 0.2f;
         zoomRate = 4.0f;
         mousePos = Vector2.zero;
         mainCam = Camera.main;

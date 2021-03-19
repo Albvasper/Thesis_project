@@ -1,15 +1,15 @@
 ﻿public abstract class State {
     
     protected MobileUnit mobileUnit;
-    protected Developer developer;
+    protected Intern intern;
     protected Unit unit;
 
     public State(MobileUnit mu) {
         mobileUnit = mu;
     }
     
-    public State(Developer dev) {
-        developer = dev;
+    public State(Intern i) {
+        intern = i;
     }
     
     public State(Unit u) {
