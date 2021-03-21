@@ -15,20 +15,20 @@ using UnityEngine.UI;
 public class Studio : StationaryUnit {
     
     #region Singleton pattern
-    private static Studio instance;
-    public static Studio Instance {
-        get {
-            return instance;
+        private static Studio instance;
+        public static Studio Instance {
+            get {
+                return instance;
+            }
         }
-    }
 
-    private void Awake() {
-        if (instance == null) {
-            instance = this;
-        } else {
-            Destroy(this);
+        private void Awake() {
+            if (instance == null) {
+                instance = this;
+            } else {
+                Destroy(this);
+            }
         }
-    }
     #endregion
     
     public Slider lvlUpBar;

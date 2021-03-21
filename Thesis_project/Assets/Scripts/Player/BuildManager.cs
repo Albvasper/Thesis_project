@@ -27,7 +27,8 @@ public class BuildManager : MonoBehaviour {
     private Vector3 offset;
     private Camera mainCam;
     private bool initBuilding;
-    private bool  building = true;
+    private bool building = true;
+    private int prefabLayer;
 
     [SerializeField] private NavMeshSurface navMeshSurface;
     
@@ -42,7 +43,8 @@ public class BuildManager : MonoBehaviour {
         BuildStructure();
     }
 
-    public void InitBuilding(GameObject go, GameObject goPrev) {
+    public void InitBuilding(GameObject go) {
+        prefabLayer = go.layer;
         placeableObjPreview = go;
         initBuilding = true;
     }
@@ -52,11 +54,11 @@ public class BuildManager : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
             var finalPos = Grid.Instance.GetGridPoint(hit.point);
-            placeableObj.transform.position = finalPos + new Vector3(0, placeableObj.transform.localScale.y / 2, 0);
-            if (Input.GetKey(KeyCode.R)) {
+            placeableObj.transform.position = finalPos + new Vector3(0, placeableObj.transform.position.y, 0);
+            if (Input.GetKeyDown(KeyCode.R)) {
                 // Rotate structure
                 float r = 0.0f;
-                r += 0.3f;
+                r += 90f;
                 placeableObj.transform.Rotate(0, r, 0);
             }
             //placeableObj.transform.position = hit.point + new Vector3(0, placeableObj.transform.localScale.y / 2, 0);
@@ -78,11 +80,12 @@ public class BuildManager : MonoBehaviour {
 
     private void Build() {
         if (Input.GetMouseButtonDown(0)) {
-            placeableObj.layer = 0;
+            placeableObj.layer = prefabLayer;
             placeableObj = null;
             building = true;
             // Quit building mode
             initBuilding = false;
+            navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
         }
     }
 }

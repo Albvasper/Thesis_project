@@ -6,16 +6,9 @@ public class ElectricDoor : StationaryUnit {
     
     [SerializeField] private GameObject doorA;
     [SerializeField] private GameObject doorB;
-    [SerializeField] private Transform openedDoorPosA;
-    [SerializeField] private Transform openedDoorPosB;
-    [SerializeField] private Collider sensor;
-    private Transform initPosA;
-    private Transform initPosB;
 
     protected override void Start() {
         base.Start();
-        initPosA = doorA.transform;
-        initPosB = doorB.transform;
     }
 
     protected override void Update() {
@@ -23,9 +16,7 @@ public class ElectricDoor : StationaryUnit {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.tag == "MobileUnit") {
-            OpenDoors();
-        }
+        OpenDoors();
     }
 
     private void OnTriggerExit(Collider other) {
@@ -33,12 +24,12 @@ public class ElectricDoor : StationaryUnit {
     }
 
     private void OpenDoors() {
-        doorA.transform.Translate(openedDoorPosA.position);
-        doorB.transform.Translate(openedDoorPosB.position);
+        doorA.SetActive(false);
+        doorB.SetActive(false);
     }
 
     private void CloseDoors() {
-        doorA.transform.Translate(initPosA.position);
-        doorB.transform.Translate(initPosB.position);
+        doorA.SetActive(true);
+        doorB.SetActive(true);
     }
 }

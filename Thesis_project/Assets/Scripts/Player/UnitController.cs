@@ -175,11 +175,19 @@ public class UnitController : MonoBehaviour {
         foreach (GameObject go in TaskListsForUnits) {
             go.SetActive(false);
         }
-
         if (unit.gameObject.layer == 9) {
             // If unit is stationary unit
             if (unit.GetComponent<Studio>() == true) {
                 TaskListsForUnits[0].SetActive(true);
+            }
+            else if (unit.GetComponent<RecluterDev>() == true) {
+                TaskListsForUnits[2].SetActive(true);
+            }
+            else if (unit.GetComponent<RecluterDesigner>() == true) {
+                TaskListsForUnits[3].SetActive(true);
+            }
+            else if (unit.GetComponent<RecluterArtist>() == true) {
+                TaskListsForUnits[4].SetActive(true);
             }
         } else if (unit.gameObject.layer == 8) {
             // If unit is mobile unit

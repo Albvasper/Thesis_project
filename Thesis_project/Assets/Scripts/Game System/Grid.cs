@@ -21,7 +21,7 @@ public class Grid : MonoBehaviour {
     }
     #endregion
 
-    private float size;
+    [SerializeField]private float size;
 
     private void Start() {
         size = 4f;
@@ -30,11 +30,11 @@ public class Grid : MonoBehaviour {
     public Vector3 GetGridPoint(Vector3 pos) {
         pos -= transform.position;
         int x = Mathf.RoundToInt(pos.x / size);
-        int y = Mathf.RoundToInt(pos.y / size);
+        //int y = Mathf.RoundToInt(pos.y / size);
         int z = Mathf.RoundToInt(pos.z / size);
         Vector3 r = new Vector3 (
                                 (float)x * size, 
-                                (float)y * size,
+                                0,
                                 (float)z * size
                                 );
         r += transform.position;
