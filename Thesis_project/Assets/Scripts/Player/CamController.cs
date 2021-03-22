@@ -13,20 +13,20 @@ using UnityEngine.EventSystems;
 public class CamController : MonoBehaviour {
 
     #region Singleton Pattern
-    private static CamController instance;
-    public static CamController Instance {
-        get {
-            return instance;
+        private static CamController instance;
+        public static CamController Instance {
+            get {
+                return instance;
+            }
         }
-    }
 
-    private void Awake() {
-        if (instance == null) {
-            instance = this;
-        } else {
-            Destroy(this);
+        private void Awake() {
+            if (instance == null) {
+                instance = this;
+            } else {
+                Destroy(this);
+            }
         }
-    }
     #endregion
     
     private float camVel;
@@ -44,9 +44,11 @@ public class CamController : MonoBehaviour {
     }
 
     private void Update() {
-        GetInput();
-        UpdateCursor();
-        ZoomCam();
+        if (PauseMenu.Instance.GetIsGamePaused() == false) {
+            GetInput();
+            UpdateCursor();
+            ZoomCam();
+        }
     }
     
     private void GetInput() {

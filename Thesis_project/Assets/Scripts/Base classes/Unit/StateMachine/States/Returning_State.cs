@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Returning_State : State {
 
-    private float studioProximity;
+    private float coreProximity;
 
     public Returning_State(Intern intern) : base(intern) {
-        studioProximity = 12f;
+        coreProximity = 12f;
     }
 
     public override void Update() {
         /* Main Loop: The intern will head to the Studio until it gets there.*/
         intern.MoveUnit(Studio.Instance.transform.position);
-        if (Vector3.Distance(intern.transform.position, Studio.Instance.transform.position) < studioProximity) {
+        if (Vector3.Distance(intern.transform.position, Studio.Instance.transform.position) < coreProximity) {
             Studio.Instance.ReceiveResource(intern);
             // Change state to return to resource
             if (intern.GetCurrentResource() == null) {

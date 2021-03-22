@@ -3,6 +3,7 @@
     protected MobileUnit mobileUnit;
     protected Intern intern;
     protected Unit unit;
+    protected EnemyRecolectors enemyRecolector;
 
     public State(MobileUnit mu) {
         mobileUnit = mu;
@@ -14,6 +15,10 @@
     
     public State(Unit u) {
         unit = u;
+    }
+
+    public State(EnemyRecolectors er) {
+        enemyRecolector = er;
     }
 
     public abstract void Update();

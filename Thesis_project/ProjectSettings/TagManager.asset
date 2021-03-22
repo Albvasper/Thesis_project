@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Unit
   - Resource
+  - EnemyUnit
   layers:
   - Default
   - TransparentFX

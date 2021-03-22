@@ -12,12 +12,20 @@ public abstract class MobileUnit : Unit {
     protected override void Start() {
         base.Start();
         SetState(new IDLE_State(this));
-        Player.Instance.AddMobileUnit(gameObject);
+        AddUnitToPlayers();
     }
 
     protected override void Update() {
         base.Update();
         currentState.Update();
+    }
+
+    protected void AddUnitToPlayers() {
+        if (aiUnit == false) {
+            Player.Instance.AddMobileUnit(gameObject);
+        } else {
+            EnemyAI.Instance.AddMobileUnit(gameObject);
+        }
     }
 
     public void SetState(State state) {
@@ -27,7 +35,7 @@ public abstract class MobileUnit : Unit {
         }
         // Replace current state with new state
         currentState = state;
-        //Debug.Log("current state: " + state.GetType().Name);
+        Debug.Log(gameObject.name + " current state: " + state.GetType().Name);
         if (currentState != null) {
             // Initialize new state
             currentState.OnStateEnter();
@@ -43,9 +51,13 @@ public abstract class MobileUnit : Unit {
     }
 
     protected override void Die() {
-        Player.Instance.GetMobileUnits().Remove(gameObject);
-        Player.Instance.GetSelectedUnits().Remove(gameObject);
-        Player.Instance.GetIdleUnits().Remove(gameObject);
+        if (aiUnit == false) {
+            Player.Instance.GetMobileUnits().Remove(gameObject);
+            Player.Instance.GetSelectedUnits().Remove(gameObject);
+            Player.Instance.GetIdleUnits().Remove(gameObject);
+        } else {
+            EnemyAI.Instance.GetMobileUnits().Remove(gameObject);
+        }
         Destroy(gameObject);
     }
 }

@@ -6,15 +6,15 @@ using UnityEngine.UI;
 public abstract class Unit : MonoBehaviour {
 
     public Slider healthBar;
-    [SerializeField]
-    protected GameObject selectionSprite;
+    [SerializeField] protected GameObject selectionSprite;
     protected bool selected;
     protected int maxHP;
     protected int currentHP;
     protected List<Action> actions;
     protected int level;
     protected int attackDamage;
-    
+    [SerializeField] protected bool aiUnit;
+
     protected virtual void Start() {
         actions = new List<Action>();
         selected = false;
@@ -38,8 +38,11 @@ public abstract class Unit : MonoBehaviour {
     }
 
     protected void CheckLevel() {
-        // Change unit look based on the player's base level
-        level = Player.Instance.GetBaseLvl();
+        if (aiUnit == false) {
+            level = Player.Instance.GetBaseLvl();
+        } else {
+            level = EnemyAI.Instance.GetBaseLvl();
+        }
     }
 
     protected void CheckHP() {
@@ -50,6 +53,10 @@ public abstract class Unit : MonoBehaviour {
         if (currentHP <= 0) {
             Die();
         }
+    }
+
+    public bool isAIUnit() {
+        return aiUnit;
     }
 
     protected abstract void Die();

@@ -15,6 +15,7 @@ public class Resource : MonoBehaviour {
     protected virtual void Start() {
         max_R_Amount = 1500;
         current_R_Amount = max_R_Amount;
+        EnemyAI.Instance.GetResourcesAvailable().Add(gameObject);
     }
 
     protected virtual void Update() {
@@ -49,6 +50,7 @@ public class Resource : MonoBehaviour {
     }
 
     private void Delete() {
+        EnemyAI.Instance.GetResourcesAvailable().Remove(gameObject);
         Destroy(gameObject);
     }
     

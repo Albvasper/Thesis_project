@@ -53,15 +53,13 @@ public class BuildManager : MonoBehaviour {
         Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
-            var finalPos = Grid.Instance.GetGridPoint(hit.point);
-            placeableObj.transform.position = finalPos + new Vector3(0, placeableObj.transform.position.y, 0);
+            placeableObj.transform.position = new Vector3(hit.point.x, placeableObj.transform.position.y, hit.point.z);
             if (Input.GetKeyDown(KeyCode.R)) {
                 // Rotate structure
                 float r = 0.0f;
                 r += 90f;
                 placeableObj.transform.Rotate(0, r, 0);
             }
-            //placeableObj.transform.position = hit.point + new Vector3(0, placeableObj.transform.localScale.y / 2, 0);
         }
     }
 

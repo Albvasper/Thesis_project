@@ -7,9 +7,11 @@ public abstract class ConditionNode : Node {
 
     public override void Update() {
         if (Condition() == true && children.Count > 0) {
-            behaviorTree.SwitchCurrentNode(children[0]);
+            //behaviorTree.SwitchCurrentNode(children[0]);
+            children[0].Update();
         } else if (/*Condition() == false && */children.Count == 2) {
-            behaviorTree.SwitchCurrentNode(children[1]);
+            children[1].Update();
+            //behaviorTree.SwitchCurrentNode(children[1]);
         }
     }
 
