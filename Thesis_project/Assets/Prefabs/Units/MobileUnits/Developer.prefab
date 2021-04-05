@@ -175,7 +175,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a12163ccbae727442aec7a8797623bf5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -263,6 +263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2191861137046342976}
   selectionSprite: {fileID: 2191861136941634009}
+  aiUnit: 0
   agent: {fileID: 2191861135876549265}
 --- !u!1 &2191861135962286636
 GameObject:

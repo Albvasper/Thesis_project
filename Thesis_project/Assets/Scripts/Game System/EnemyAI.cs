@@ -36,6 +36,9 @@ public class EnemyAI : MonoBehaviour {
     // Prefabs
     public GameObject recolectorPrefab;
     // Others
+    public Slider healthBar;
+    protected int maxHP;
+    protected int currentHP;
     [SerializeField] private List<GameObject> resourcesAvailable = new List<GameObject>();
     [SerializeField] private List<GameObject> playerUnitsAttacking = new List<GameObject>();
     public Slider lvlUpBar;
@@ -44,6 +47,7 @@ public class EnemyAI : MonoBehaviour {
     private float time;
     private int delay;
     private bool lvlUpStudio;
+    private bool isBeingAttacked;
     // AI bevahior system
     private BehaviorTree behaviorTree;
     #region BehaviorTree nodes
@@ -84,12 +88,17 @@ public class EnemyAI : MonoBehaviour {
         lvlUpStudio = false;
         time = 0;
         currentUnitSpaces = 5;
+        maxHP = 100;
+        currentHP = maxHP;
+        healthBar.maxValue = maxHP;
+        isBeingAttacked = false;
         InitBehaviorTree();
     }
 
     private void Update() {
         behaviorTree.Update();
         LevelUpBase();
+        CheckHP();
     }
     
     private void InitBehaviorTree() {
@@ -166,6 +175,28 @@ public class EnemyAI : MonoBehaviour {
             buyOffensiveUnitsNode = new BuyOffensiveUnitsNode(behaviorTree);
             behaviorTree.AddNode(checkOffensiveAndEnemyUnitsNode, buyOffensiveUnitsNode);
         #endregion
+    }
+
+    private void CheckHP() {
+        healthBar.value = currentHP;
+        if (currentHP > maxHP) {
+            currentHP = maxHP;
+        }
+        if (currentHP <= 0) {
+            Die();
+        }
+    }
+
+    public bool GetIsBeingAttacked() {
+        return isBeingAttacked;
+    }
+
+    public void IsBeingAttacked(bool b) {
+        isBeingAttacked = b;
+    }
+
+    private void Die() {
+
     }
 
     public void AddMobileUnit(GameObject unit) {
@@ -254,6 +285,7 @@ public class EnemyAI : MonoBehaviour {
         lvlUpStudio = false;
         cLvlProgress = 0;
         lvlUpBar.gameObject.SetActive(false);
+        baseLevel += 1;
         time = 0;
     }
 
@@ -270,9 +302,10 @@ public class EnemyAI : MonoBehaviour {
 public class CheckIfUnderAttackNode : ConditionNode {
     public CheckIfUnderAttackNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override bool Condition() {
-        // if (base is being attacked) {
-        //     return true;
-        // }
+        Debug.Log("Check if under attack");
+        if (EnemyAI.Instance.GetIsBeingAttacked() == true) {
+            return true;
+        }
         return false;
     }
 }

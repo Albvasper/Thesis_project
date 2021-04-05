@@ -11,7 +11,7 @@ public class ShopManager : MonoBehaviour {
     private int internPrice = 10;               //Costs money
     private int studioUpgradePrice = 200;       //Costs money
     private int wallPrice = 20;                 //Costs money
-    private int automaticDoorsPrice = 100;       //Costs money
+    private int automaticDoorsPrice = 100;      //Costs money
     private int recluterDevPrice = 100;         //Costs money
     private int developerPrice = 50;            //Costs money
     private int recluterDesignerPrice = 100;    //Costs money
@@ -31,7 +31,6 @@ public class ShopManager : MonoBehaviour {
     [SerializeField] private GameObject recluterDevPrefab;
     [SerializeField] private GameObject recluterDesignerPrefab;
     [SerializeField] private GameObject recluterArtistPrefab;
-
     // Other
     private int officeSpaceValue = 10;
     [SerializeField] private List<GameObject> blockedOfficeSpaces = new List<GameObject>();

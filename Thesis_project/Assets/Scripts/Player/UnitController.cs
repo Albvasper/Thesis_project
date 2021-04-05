@@ -113,7 +113,7 @@ public class UnitController : MonoBehaviour {
                                 intern_Script.SetState(new GoingToFarm_State(intern_Script, hit.collider.GetComponent<StationaryResource>()));
                             }
                         }
-                        else if (hit.collider.tag == "Enemy Unit") {
+                        else if (hit.collider.tag == "EnemyUnit") {
                             mobileUnit_Script.SetState(new ApproachingEnemy_State(mobileUnit_Script, hit.collider.GetComponent<Unit>()));
                         } else {
                             mobileUnit_Script.SetState(new Walking_State(mobileUnit_Script, hit.point));

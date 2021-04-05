@@ -37,7 +37,7 @@ public class CamController : MonoBehaviour {
 
     private void Start() {
         zoomBounds = 5;
-        camVel = 0.2f;
+        camVel = 2.0f;
         zoomRate = 4.0f;
         mousePos = Vector2.zero;
         mainCam = Camera.main;
@@ -110,7 +110,7 @@ public class CamController : MonoBehaviour {
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0f) {
             // Camera zoom out
-            if (zoomBounds < 10){
+            if (zoomBounds < 14){
                 mainCam.transform.position += new Vector3(0, -zoomRate, zoomRate);
                 zoomBounds++;
             } 

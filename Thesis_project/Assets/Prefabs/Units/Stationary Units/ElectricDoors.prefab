@@ -481,6 +481,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 7713271293746969084}
   selectionSprite: {fileID: 7713271294417319793}
+  aiUnit: 0
   doorA: {fileID: 4879045385350365304}
   doorB: {fileID: 7713271295116357566}
 --- !u!114 &1402896016963148939
@@ -595,7 +596,7 @@ GameObject:
   - component: {fileID: 3673103158613883957}
   m_Layer: 2
   m_Name: ElectricDoors
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

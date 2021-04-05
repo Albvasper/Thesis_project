@@ -58,7 +58,7 @@ public class BuildManager : MonoBehaviour {
                 // Rotate structure
                 float r = 0.0f;
                 r += 90f;
-                placeableObj.transform.Rotate(0, r, 0);
+                placeableObj.transform.Rotate(placeableObj.transform.rotation.x, r, placeableObj.transform.rotation.z);
             }
         }
     }

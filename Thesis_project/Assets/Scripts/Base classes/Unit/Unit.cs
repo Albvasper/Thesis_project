@@ -35,6 +35,9 @@ public abstract class Unit : MonoBehaviour {
 
     public void TakeDamage(int dmg) {
         currentHP -= dmg;
+        if (aiUnit == true) {
+            EnemyAI.Instance.IsBeingAttacked(true);
+        }
     }
 
     protected void CheckLevel() {
