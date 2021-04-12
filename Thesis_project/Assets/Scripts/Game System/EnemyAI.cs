@@ -302,7 +302,7 @@ public class EnemyAI : MonoBehaviour {
 public class CheckIfUnderAttackNode : ConditionNode {
     public CheckIfUnderAttackNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override bool Condition() {
-        Debug.Log("Check if under attack");
+        //Debug.Log("Check if under attack");
         if (EnemyAI.Instance.GetIsBeingAttacked() == true) {
             return true;
         }
@@ -313,7 +313,7 @@ public class CheckIfUnderAttackNode : ConditionNode {
 public class CheckUnitSpacesNode : ConditionNode {
     public CheckUnitSpacesNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override bool Condition() {
-        Debug.Log("Check unit spaces");
+        //Debug.Log("Check unit spaces");
         if (EnemyAI.Instance.GetMobileUnits().Count == EnemyAI.Instance.GetCurrentUnitSpaces()) {
             return true;
         }
@@ -324,7 +324,7 @@ public class CheckUnitSpacesNode : ConditionNode {
 public class CheckRecolectionUnitsNode : ConditionNode {
     public CheckRecolectionUnitsNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override bool Condition() {
-        Debug.Log("Check Recolection Units Node");
+        //Debug.Log("Check Recolection Units Node");
         int counter = 0;
         foreach (GameObject go in EnemyAI.Instance.GetMobileUnits()) {
             if (go.GetComponent<EnemyRecolectors>() == true) {
@@ -341,7 +341,7 @@ public class CheckRecolectionUnitsNode : ConditionNode {
 public class CheckLevelUpBaseNode : ConditionNode {
     public CheckLevelUpBaseNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override bool Condition() {
-        Debug.Log("Check Level Up Base Node");
+        //Debug.Log("Check Level Up Base Node");
         if (EnemyAI.Instance.GetMoney() >= 200) {
             return true;
         }
@@ -352,14 +352,14 @@ public class CheckLevelUpBaseNode : ConditionNode {
 public class CountEnemyUnitsNode : DecoratorNode {
     public CountEnemyUnitsNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override void Action() {
-        Debug.Log("Count EnemyUnits Node");
+        //Debug.Log("Count EnemyUnits Node");
     }
 }
 
 public class CheckResourceForHouse : ConditionNode {
     public CheckResourceForHouse(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override bool Condition() {
-        Debug.Log("Check Resource For House");
+        //Debug.Log("Check Resource For House");
         if (EnemyAI.Instance.GetMoney() >= 100) {
             return true;
         }
@@ -370,7 +370,7 @@ public class CheckResourceForHouse : ConditionNode {
 public class CheckResourcesForRecolectionUnits : ConditionNode {
     public CheckResourcesForRecolectionUnits(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override bool Condition() {
-        Debug.Log("CheckResourcesForRecolectionUnits");
+        //Debug.Log("CheckResourcesForRecolectionUnits");
         if (EnemyAI.Instance.GetMoney() >= 40 && EnemyAI.Instance.GetMobileUnits().Count < EnemyAI.Instance.GetCurrentUnitSpaces()) {
             return true;
         }
@@ -381,7 +381,7 @@ public class CheckResourcesForRecolectionUnits : ConditionNode {
 public class LevelUpBaseNode : ActionNode {
     public LevelUpBaseNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override void Action() {
-        Debug.Log("LevelUpBaseNode");
+        //Debug.Log("LevelUpBaseNode");
         EnemyAI.Instance.UseMoney(300);
         EnemyAI.Instance.InitLevelUpBase();
     }

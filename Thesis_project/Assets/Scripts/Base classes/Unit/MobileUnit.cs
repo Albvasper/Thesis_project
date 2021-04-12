@@ -35,7 +35,7 @@ public abstract class MobileUnit : Unit {
         }
         // Replace current state with new state
         currentState = state;
-        Debug.Log(gameObject.name + " current state: " + state.GetType().Name);
+        //Debug.Log(gameObject.name + " current state: " + state.GetType().Name);
         if (currentState != null) {
             // Initialize new state
             currentState.OnStateEnter();

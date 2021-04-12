@@ -20913,9 +20913,9 @@ MonoBehaviour:
   artistPrefab: {fileID: 2281991529307043737, guid: 28493754e39404b4c85dcb8abeca3129, type: 3}
   wallPrefab: {fileID: 8444112423096412956, guid: 9d2cd843ecec61a42aa8c2a34bb8134d, type: 3}
   automaticDoorsPrefab: {fileID: 7478898646840847145, guid: 79ba9620b99bb9a4e94a0fb52f906627, type: 3}
-  recluterDevPrefab: {fileID: 7661711155024646854, guid: fcc3a1061aca359438ffb9039a4e2ae5, type: 3}
+  recluterDevPrefab: {fileID: 1201164874843025031, guid: 02f4debe94e35d4419d26f9a780cf0f1, type: 3}
   recluterDesignerPrefab: {fileID: 8208304049837538295, guid: 2920e5abca35152499d469279a59377c, type: 3}
-  recluterArtistPrefab: {fileID: 1537443939212073437, guid: 8a8db453138f0894e8f32b16b695f9d5, type: 3}
+  recluterArtistPrefab: {fileID: 7562799263728489791, guid: 8a8db453138f0894e8f32b16b695f9d5, type: 3}
   blockedOfficeSpaces:
   - {fileID: 1289249242}
   - {fileID: 2041212557}
