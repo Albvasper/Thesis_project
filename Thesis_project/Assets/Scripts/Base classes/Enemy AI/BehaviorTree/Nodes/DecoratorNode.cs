@@ -5,7 +5,7 @@
 
     public override void Update() {
         Action();
-        if (children.Count < 0) {
+        if (children.Count > 0) {
             children[0].Update();
             behaviorTree.SwitchCurrentNode(children[0]);
         }

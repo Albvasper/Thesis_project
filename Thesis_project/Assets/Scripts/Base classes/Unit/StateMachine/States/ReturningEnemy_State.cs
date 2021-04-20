@@ -16,9 +16,9 @@ public class ReturningEnemy_State : State {
 
     public override void Update() {
         /* Main Loop: The unit will head to the core until it gets there.*/
-        enemyRecolector.MoveUnit(EnemyAI.Instance.transform.position);
-        if (Vector3.Distance(enemyRecolector.transform.position, EnemyAI.Instance.transform.position) < coreProximity) {
-            EnemyAI.Instance.ReceiveResource(enemyRecolector);
+        enemyRecolector.MoveUnit(VideogameCore.Instance.transform.position);
+        if (Vector3.Distance(enemyRecolector.transform.position, VideogameCore.Instance.transform.position) < coreProximity) {
+            VideogameCore.Instance.ReceiveResource(enemyRecolector);
             // Change state to return to resource
             if (enemyRecolector.GetCurrentResource() == null) {
                 enemyRecolector.SetState(new IDLE_State(enemyRecolector));

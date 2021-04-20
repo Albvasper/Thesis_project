@@ -11,9 +11,12 @@ GameObject:
   - component: {fileID: 8508538968686625022}
   - component: {fileID: 6828380903916485044}
   - component: {fileID: 8063398685299678496}
+  - component: {fileID: 1485521458062868364}
+  - component: {fileID: 4497563078807454484}
+  - component: {fileID: 7289166603576469956}
   m_Layer: 9
   m_Name: default
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,6 +84,51 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &1485521458062868364
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622139287629763525}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 7.781, y: 3.085, z: 0.54800004}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.001, y: 0.98600006, z: -0.045}
+  m_TimeToStationary: 0.5
+--- !u!65 &4497563078807454484
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622139287629763525}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 15.562202, y: 6.169303, z: 1.096395}
+  m_Center: {x: 0.0014855862, y: 0.98571956, z: -0.044775486}
+--- !u!114 &7289166603576469956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622139287629763525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8bc1f9f1b010444f96a43443df01405, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 4211653099725974667}
+  selectionSprite: {fileID: 8329940847913827739}
+  aiWall: 0
+  parentGO: {fileID: 8444112423096412956}
 --- !u!1 &1057711300762107399
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,7 +143,7 @@ GameObject:
   - component: {fileID: 9163029351373661690}
   m_Layer: 9
   m_Name: Unit_Canvas
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -428,7 +476,7 @@ GameObject:
   - component: {fileID: 4293063791691466873}
   m_Layer: 9
   m_Name: 'SelectionIndicator '
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -505,8 +553,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9107495803830645158}
-  - component: {fileID: 2432220722629831477}
-  - component: {fileID: 8444112423096412957}
   m_Layer: 9
   m_Name: Wall
   m_TagString: Unit
@@ -522,7 +568,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8444112423096412956}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -0.61, z: 0}
+  m_LocalPosition: {x: -0, y: -0.57, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8508538968686625022}
@@ -531,37 +577,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2432220722629831477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8444112423096412956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 1
-  m_Area: 1
-  m_IgnoreFromBuild: 0
-  m_AffectedAgents: ffffffff
---- !u!114 &8444112423096412957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8444112423096412956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8bc1f9f1b010444f96a43443df01405, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 4211653099725974667}
-  selectionSprite: {fileID: 8329940847913827739}
-  aiUnit: 0
 --- !u!1 &8976590758171807170
 GameObject:
   m_ObjectHideFlags: 0

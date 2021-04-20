@@ -12,7 +12,7 @@ public abstract class MobileUnit : Unit {
     protected override void Start() {
         base.Start();
         SetState(new IDLE_State(this));
-        AddUnitToPlayers();
+        AddUnitToActor();
     }
 
     protected override void Update() {
@@ -20,7 +20,7 @@ public abstract class MobileUnit : Unit {
         currentState.Update();
     }
 
-    protected void AddUnitToPlayers() {
+    protected void AddUnitToActor() {
         if (aiUnit == false) {
             Player.Instance.AddMobileUnit(gameObject);
         } else {
@@ -55,6 +55,7 @@ public abstract class MobileUnit : Unit {
             Player.Instance.GetMobileUnits().Remove(gameObject);
             Player.Instance.GetSelectedUnits().Remove(gameObject);
             Player.Instance.GetIdleUnits().Remove(gameObject);
+            EnemyAI.Instance.GetCurrentAttackers().Remove(gameObject);
         } else {
             EnemyAI.Instance.GetMobileUnits().Remove(gameObject);
         }

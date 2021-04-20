@@ -7,20 +7,20 @@ using UnityEngine.UI;
 public class UnitController : MonoBehaviour {
 
     #region Singleton Pattern
-    private static UnitController instance;
-    public static UnitController Instance { 
-        get { 
-            return instance; 
-        } 
-    }
-    
-    private void Awake() {
-        if (instance == null) {
-            instance = this;
-        } else {
-            Destroy(this);
+        private static UnitController instance;
+        public static UnitController Instance { 
+            get { 
+                return instance; 
+            } 
         }
-    }
+        
+        private void Awake() {
+            if (instance == null) {
+                instance = this;
+            } else {
+                Destroy(this);
+            }
+        }
     #endregion
 
     private Camera mainCam;
@@ -114,6 +114,7 @@ public class UnitController : MonoBehaviour {
                             }
                         }
                         else if (hit.collider.tag == "EnemyUnit") {
+                            Debug.Log("WHT");
                             mobileUnit_Script.SetState(new ApproachingEnemy_State(mobileUnit_Script, hit.collider.GetComponent<Unit>()));
                         } else {
                             mobileUnit_Script.SetState(new Walking_State(mobileUnit_Script, hit.point));

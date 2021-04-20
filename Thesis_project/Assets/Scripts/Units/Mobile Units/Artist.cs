@@ -5,6 +5,8 @@ using UnityEngine;
 public class Artist : MobileUnit {
     
     protected override void Start() {
+        maxHP = 100;
+        attackDamage = 23;
         base.Start();
     }
 

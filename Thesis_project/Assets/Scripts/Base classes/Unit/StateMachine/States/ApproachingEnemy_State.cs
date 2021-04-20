@@ -12,6 +12,10 @@ public class ApproachingEnemy_State : State {
         enemyProximity = 3;
     }
 
+    public override void OnStateEnter() {
+        mobileUnit.CurrentlyAttacking();
+    }
+
     public override void Update() {
         if (enemyUnit != null) {
             mobileUnit.MoveUnit(enemyUnit.transform.position);
@@ -21,6 +25,12 @@ public class ApproachingEnemy_State : State {
             }
         } else {
             mobileUnit.SetState(new IDLE_State(mobileUnit));
+        }
+    }
+    
+    public override void OnStateExit() {
+        if (mobileUnit.isActiveAndEnabled == true) {
+            mobileUnit.NotAttacking();
         }
     }
 }

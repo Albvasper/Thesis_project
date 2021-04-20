@@ -11,6 +11,8 @@ public class Intern : MobileUnit {
     private int resourceAmount;                     // Amount of resource that the Intern is carrying right now
 
     protected override void Start() {
+        maxHP = 100;
+        attackDamage = 5;
         base.Start();
         efficiency = 10;
         //farming = false;

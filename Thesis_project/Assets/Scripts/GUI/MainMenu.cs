@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
 
+    [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject optionsPanel;
     [SerializeField] private GameObject creditsPanel;
     [SerializeField] private GameObject deskObj;
@@ -38,9 +39,11 @@ public class MainMenu : MonoBehaviour {
 
     public void ShowOptionsPanel() {
         optionsPanel.SetActive(true);
+        mainMenuPanel.SetActive(false);
     }
     
     public void ShowCreditsPanel() {
+        mainMenuPanel.SetActive(false);
         creditsPanel.SetActive(true);
     }
 
@@ -50,10 +53,12 @@ public class MainMenu : MonoBehaviour {
 
     public void CloseOptionsPanel() {
         optionsPanel.SetActive(false);
+        mainMenuPanel.SetActive(true);
     }
 
     public void CloseCreditsPanel() {
         creditsPanel.SetActive(false);
+        mainMenuPanel.SetActive(true);
     }
 
     private IEnumerator FadeOutScene() {

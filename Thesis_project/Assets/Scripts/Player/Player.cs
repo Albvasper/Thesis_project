@@ -42,9 +42,6 @@ public class Player : MonoBehaviour {
     private List<GameObject> idleUnits = new List<GameObject>();
     private int unitSpaces;
     private int maxUnitSpaces;
-    // Nav mesh
-    //public NavMeshSurface navMeshSurface;
-    //navMeshSurface.BuildNavMesh; METHOD THAT REBAKES THE MESH!!!!!!!!!!!!!!
     // HUD / GUI
     [SerializeField] private Text linesOfCodeText;
     [SerializeField] private Text assetsText;
@@ -54,6 +51,7 @@ public class Player : MonoBehaviour {
     [SerializeField] private GameObject MsgToPlayer;
     [SerializeField] private Text msgToPlayerText;
     [SerializeField] private Text baseLevelText;
+    [SerializeField] private Text fpsCounter;
 
     private int msgShowTime;
 
@@ -61,7 +59,7 @@ public class Player : MonoBehaviour {
         mainCam = Camera.main;
         baseLevel = 1;
         maxBaseLevel = 3;
-        money = 10000;
+        money = 0;
         assets = 0;
         linesOfCode = 0;
         unitSpaces = 5;
@@ -90,6 +88,8 @@ public class Player : MonoBehaviour {
         moneyText.text = money.ToString();
         idleUnitsText.text = idleUnits.Count.ToString();
         nOfUnitSpaces.text =  mobileUnits.Count.ToString() + "/" + unitSpaces.ToString();
+        float fps = 1 / Time.unscaledDeltaTime;
+        fpsCounter.text = "FPS: " + fps;
     }
 
     public void AddBaseLvl() {

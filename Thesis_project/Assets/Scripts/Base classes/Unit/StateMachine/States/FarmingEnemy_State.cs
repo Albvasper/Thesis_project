@@ -31,7 +31,9 @@ public class FarmingEnemy_State : State {
     }
 
     public override void OnStateExit() {
-        enemyRecolector.GetCurrentResource().CheckQuantity();
+        if (enemyRecolector.GetCurrentResource() != null) {
+            enemyRecolector.GetCurrentResource().CheckQuantity();
+        }
         enemyRecolector.GetAgent().isStopped = false;
         enemyRecolector.SetIsFarming(false);
     }

@@ -14,4 +14,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: 80d7a80a2e0ee8642badb92ab9a538c7
+  - enabled: 1
+    path: Assets/Scenes/Crunch_Ending.unity
+    guid: 4f3e09d2f89d8d942aded425dc45f778
+  - enabled: 1
+    path: Assets/Scenes/Delay_Ending.unity
+    guid: 72fb46e494f7a704b918b7e0cdd7915c
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 006a67d776fccf54483e867b00effc07
   m_configObjects: {}

@@ -55,19 +55,19 @@ public class CamController : MonoBehaviour {
         /* Move camera using keys (Arrows by default) or 
         by moving the cursor close to the bounds of the screen. */
 
-        if (Input.GetKey("up") || mousePos.y > Screen.width / 5) {
+        if (Input.GetKey("up") || mousePos.y >= (Screen.width / 2)) {
             //Move Up
             MoveCamera("up");
         }
-        else if (Input.GetKey("down") || mousePos.y < -Screen.width / 5) {
+        else if (Input.GetKey("down") || mousePos.y <= -(Screen.width / 2)) {
             //Move Down
             MoveCamera("down");
         }
-        if (Input.GetKey("left") || mousePos.x < -Screen.width / 3) {
+        if (Input.GetKey("left") || mousePos.x <= -(Screen.width / 2)) {
             //Move Left
             MoveCamera("left");
         }
-        else if (Input.GetKey("right") || mousePos.x > Screen.width / 3) {
+        else if (Input.GetKey("right") || mousePos.x >= (Screen.width / 2)) {
             //Move Right
             MoveCamera("right");
         }

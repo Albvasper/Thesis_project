@@ -7,21 +7,23 @@ public abstract class Unit : MonoBehaviour {
 
     public Slider healthBar;
     [SerializeField] protected GameObject selectionSprite;
+    protected bool aiUnit;
+    protected bool isAttacking;
     protected bool selected;
     protected int maxHP;
     protected int currentHP;
     protected List<Action> actions;
     protected int level;
     protected int attackDamage;
-    [SerializeField] protected bool aiUnit;
-
+    
     protected virtual void Start() {
         actions = new List<Action>();
         selected = false;
-        maxHP = 100;
         currentHP = maxHP;
         healthBar.maxValue = maxHP;
-        attackDamage = 25;
+        if (gameObject.tag == "EnemyUnit") {
+            aiUnit = true;
+        }
     }
 
     protected virtual void Update() {
@@ -29,14 +31,18 @@ public abstract class Unit : MonoBehaviour {
         CheckLevel();
     }
 
-    public void Attack(Unit enemyUnit) {
-        enemyUnit.TakeDamage(attackDamage);
+    public GameObject GetGameObject() {
+        return gameObject;
     }
 
-    public void TakeDamage(int dmg) {
+    public void Attack(Unit enemyUnit) {
+        enemyUnit.TakeDamage(attackDamage, this);
+    }
+
+    public void TakeDamage(int dmg, Unit attacker) {
         currentHP -= dmg;
         if (aiUnit == true) {
-            EnemyAI.Instance.IsBeingAttacked(true);
+            EnemyAI.Instance.IsBeingAttacked(attacker);
         }
     }
 
@@ -54,6 +60,7 @@ public abstract class Unit : MonoBehaviour {
             currentHP = maxHP;
         }
         if (currentHP <= 0) {
+            Debug.Log("Wat");
             Die();
         }
     }
@@ -62,7 +69,25 @@ public abstract class Unit : MonoBehaviour {
         return aiUnit;
     }
 
-    protected abstract void Die();
+    public bool IsAttacking() {
+        return isAttacking;
+    }
+
+    public void CurrentlyAttacking() {
+        isAttacking = true;
+    }
+
+    public void NotAttacking() {
+        isAttacking = false;
+    }
+
+    protected virtual void Die() {
+        if (aiUnit == false) {
+            Player.Instance.GetSelectedUnits().Remove(gameObject);
+            EnemyAI.Instance.GetCurrentAttackers().Remove(gameObject);
+        }
+        Destroy(gameObject);
+    }
 
     public void Select() {
         selected = true;

@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: journey-1x
   m_Shader: {fileID: 4800000, guid: bee44b4a58655ee4cbff107302a3e131, type: 3}
-  m_ShaderKeywords: _CELPRIMARYMODE_SINGLE _TEXTUREBLENDINGMODE_MULTIPLY _UNITYSHADOWMODE_NONE
+  m_ShaderKeywords: _CELPRIMARYMODE_NONE _TEXTUREBLENDINGMODE_MULTIPLY _UNITYSHADOWMODE_NONE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -78,7 +78,7 @@ Material:
     - _BumpScale: 1
     - _CelExtraEnabled: 0
     - _CelNumSteps: 3
-    - _CelPrimaryMode: 1
+    - _CelPrimaryMode: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -131,7 +131,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
+    - _BaseColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorDim: {r: 0.20754716, g: 0.20754716, b: 0.20754716, a: 1}
     - _ColorDimCurve: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}

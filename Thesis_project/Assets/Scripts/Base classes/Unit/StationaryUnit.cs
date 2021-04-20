@@ -11,8 +11,4 @@ public abstract class StationaryUnit : Unit {
     protected override void Update() {
         base.Update();
     }
-
-    protected override void Die() {
-        Destroy(gameObject);
-    }
 }

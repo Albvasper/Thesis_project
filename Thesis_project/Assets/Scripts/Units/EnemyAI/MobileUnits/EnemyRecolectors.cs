@@ -11,6 +11,8 @@ public class EnemyRecolectors : MobileUnit {
     private int resourceAmount;  
 
     protected override void Start() {
+        maxHP = 100;
+        attackDamage = 5;
         base.Start();
         farming = false;
         efficiency = 10;

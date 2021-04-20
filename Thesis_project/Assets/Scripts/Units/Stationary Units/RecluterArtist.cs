@@ -5,6 +5,8 @@ using UnityEngine;
 public class RecluterArtist : StationaryUnit {
     
     protected override void Start() {
+        maxHP = 200;
+        attackDamage = 0;
         base.Start();
     }
 

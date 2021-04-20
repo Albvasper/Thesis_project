@@ -2,25 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EnemyAI : MonoBehaviour {
 
     #region Singleton Pattern
-    private static EnemyAI instance;
-    public static EnemyAI Instance { 
-        get { 
-            return instance; 
-        } 
-    }
-    
-    private void Awake() {
-        if (instance == null) {
-            instance = this;
-        } else {
-            Destroy(this);
+        private static EnemyAI instance;
+        public static EnemyAI Instance { 
+            get { 
+                return instance; 
+            } 
         }
         
-    }
+        private void Awake() {
+            InitBehaviorTree();
+            if (instance == null) {
+                instance = this;
+            } else {
+                Destroy(this);
+            }
+        }
     #endregion
     
     private int baseLevel;
@@ -28,26 +29,20 @@ public class EnemyAI : MonoBehaviour {
     private int money;
     private int assets;
     private int linesOfCode;
-    // AI units
+    // AI unit managment
     [SerializeField] private List<GameObject> mobileUnits = new List<GameObject>();
+    [SerializeField] private List<GameObject> offensiveUnitGenerators = new List<GameObject>();
+    [SerializeField] private List<GameObject> currentAttackers = new List<GameObject>();
+    [SerializeField] private List<GameObject> walls = new List<GameObject>();
+    [SerializeField] private Transform unitSpawnPoint;
     private int maxUnitSpaces;
     private int currentUnitSpaces;
-    [SerializeField] private Transform unitsSpawnPoint;
-    // Prefabs
-    public GameObject recolectorPrefab;
-    // Others
-    public Slider healthBar;
-    protected int maxHP;
-    protected int currentHP;
+    // Unit prefabs
+    [SerializeField] private GameObject bugGeneratorPrefab;
+    [SerializeField] private GameObject criticGenerator;
+    [SerializeField] private GameObject selfDoubtGenerator;
+    // Other
     [SerializeField] private List<GameObject> resourcesAvailable = new List<GameObject>();
-    [SerializeField] private List<GameObject> playerUnitsAttacking = new List<GameObject>();
-    public Slider lvlUpBar;
-    private int lvlUpTime;
-    private int cLvlProgress;   // current level up progress
-    private float time;
-    private int delay;
-    private bool lvlUpStudio;
-    private bool isBeingAttacked;
     // AI bevahior system
     private BehaviorTree behaviorTree;
     #region BehaviorTree nodes
@@ -72,6 +67,9 @@ public class EnemyAI : MonoBehaviour {
         private GatherResourceForOffGenUnitNode gatherResourceForOffGenUnitNode;
         private ProtectBaseNode protectBaseNode;
         private BuyOffensiveUnitsNode buyOffensiveUnitsNode;
+        private CheckIfWallCanBeBoughtNode checkIfWallCanBeBoughtNode;
+        private BuyWallNode buyWallNode;
+        private CheckNumberOfWalls checkNumberOfWalls;
     #endregion
 
     private void Start() {
@@ -80,25 +78,16 @@ public class EnemyAI : MonoBehaviour {
         assets = 0;
         linesOfCode = 0;
         maxUnitSpaces = 300;
-        lvlUpTime = 30;
-        lvlUpBar.maxValue = lvlUpTime;
-        lvlUpBar.gameObject.SetActive(false);
-        delay = 1;
-        cLvlProgress = 0;
-        lvlUpStudio = false;
-        time = 0;
         currentUnitSpaces = 5;
-        maxHP = 100;
-        currentHP = maxHP;
-        healthBar.maxValue = maxHP;
-        isBeingAttacked = false;
-        InitBehaviorTree();
     }
 
     private void Update() {
         behaviorTree.Update();
-        LevelUpBase();
-        CheckHP();
+        /* If all recolection units are dead and theres
+        no money left, the AI will lose the game.*/
+        if (mobileUnits.Count < 0 && money < 40) {
+            SceneManager.LoadScene(3);
+        }
     }
     
     private void InitBehaviorTree() {
@@ -114,6 +103,9 @@ public class EnemyAI : MonoBehaviour {
             checkRecolectionUnitsNode = new CheckRecolectionUnitsNode(behaviorTree);
             behaviorTree.AddNode(behaviorTree.GetRoot(), checkRecolectionUnitsNode);
             // Node 4
+            checkNumberOfWalls = new CheckNumberOfWalls(behaviorTree);
+            behaviorTree.AddNode(behaviorTree.GetRoot(), checkNumberOfWalls);
+            // Node 5
             checkLevelUpBaseNode = new CheckLevelUpBaseNode(behaviorTree);
             behaviorTree.AddNode(behaviorTree.GetRoot(), checkLevelUpBaseNode);
         #endregion
@@ -128,9 +120,12 @@ public class EnemyAI : MonoBehaviour {
             checkResourcesForRecolectionUnits = new CheckResourcesForRecolectionUnits(behaviorTree);
             behaviorTree.AddNode(checkRecolectionUnitsNode, checkResourcesForRecolectionUnits);
             // Node 4
+            checkIfWallCanBeBoughtNode = new CheckIfWallCanBeBoughtNode(behaviorTree);
+            behaviorTree.AddNode(checkNumberOfWalls, checkIfWallCanBeBoughtNode);
+            // Node 5
             levelUpBaseNode = new LevelUpBaseNode(behaviorTree);
             behaviorTree.AddNode(checkLevelUpBaseNode, levelUpBaseNode);
-            // Node 5
+            // Node 6
             gatherResourceNode = new GatherResourceNode(behaviorTree);
             behaviorTree.AddNode(checkLevelUpBaseNode, gatherResourceNode);
         #endregion
@@ -150,6 +145,9 @@ public class EnemyAI : MonoBehaviour {
             // Node 5
             gatherResourcesForRecolectionUnitNode = new GatherResourcesForRecolectionUnitNode(behaviorTree);
             behaviorTree.AddNode(checkResourcesForRecolectionUnits, gatherResourcesForRecolectionUnitNode);
+            // Node 6
+            buyWallNode = new BuyWallNode(behaviorTree);
+            behaviorTree.AddNode(checkIfWallCanBeBoughtNode, buyWallNode);
         #endregion
         #region Forth node layer
             // Node 1
@@ -159,7 +157,7 @@ public class EnemyAI : MonoBehaviour {
             checkResourcesForOffensiveGeneratorUnitNode = new CheckResourcesForOffensiveGeneratorUnitNode(behaviorTree);
             behaviorTree.AddNode(checkOffensiveUnitGeneratorNode, checkResourcesForOffensiveGeneratorUnitNode);
         #endregion
-        #region  Fifth node layer
+        #region Fifth node layer
             // Node 1
             buyOffensiveGeneratorUnitNode = new BuyOffensiveGeneratorUnitNode(behaviorTree);
             behaviorTree.AddNode(checkResourcesForOffensiveGeneratorUnitNode, buyOffensiveGeneratorUnitNode);
@@ -167,7 +165,7 @@ public class EnemyAI : MonoBehaviour {
             gatherResourceForOffGenUnitNode = new GatherResourceForOffGenUnitNode(behaviorTree);
             behaviorTree.AddNode(checkResourcesForOffensiveGeneratorUnitNode, gatherResourceForOffGenUnitNode);
         #endregion
-        #region  Sixth node layer
+        #region Sixth node layer
             // Node 1
             protectBaseNode = new ProtectBaseNode(behaviorTree);
             behaviorTree.AddNode(checkOffensiveAndEnemyUnitsNode, protectBaseNode);
@@ -177,26 +175,11 @@ public class EnemyAI : MonoBehaviour {
         #endregion
     }
 
-    private void CheckHP() {
-        healthBar.value = currentHP;
-        if (currentHP > maxHP) {
-            currentHP = maxHP;
+    public void IsBeingAttacked(Unit attacker) {
+        //isBeingAttacked = true;
+        if (currentAttackers.Contains(attacker.GetGameObject()) == false) {
+            currentAttackers.Add(attacker.GetGameObject());
         }
-        if (currentHP <= 0) {
-            Die();
-        }
-    }
-
-    public bool GetIsBeingAttacked() {
-        return isBeingAttacked;
-    }
-
-    public void IsBeingAttacked(bool b) {
-        isBeingAttacked = b;
-    }
-
-    private void Die() {
-
     }
 
     public void AddMobileUnit(GameObject unit) {
@@ -207,24 +190,10 @@ public class EnemyAI : MonoBehaviour {
         return mobileUnits;
     }
 
-    public void ReceiveResource(EnemyRecolectors enemyRecolector) {
-        if (enemyRecolector.GetResourceType() == "MONEY") {
-            AddMoney(enemyRecolector.GiveResource());
-        } else if (enemyRecolector.GetResourceType() == "LINEOFCODE") {
-            AddLinesOfCode(enemyRecolector.GiveResource());
-        } else {
-            AddAssets(enemyRecolector.GiveResource());
-        }
-    }
-
-    public void SpawnRecolector() {
-        Instantiate(recolectorPrefab, unitsSpawnPoint.position, Quaternion.identity);
-    }
-
     public void AddUnitSpaces(int space) {
         currentUnitSpaces += space;
     }
-
+    
     public void UseMoney(int amount) {
         money -= amount;
     }
@@ -233,15 +202,19 @@ public class EnemyAI : MonoBehaviour {
         return maxUnitSpaces;
     }
 
-    private void AddMoney(int amount) {
+    public void AddBaseLvl() {
+        baseLevel++;
+    }
+
+    public void AddMoney(int amount) {
         money += amount;
     }
 
-    private void AddLinesOfCode(int amount) {
+    public void AddLinesOfCode(int amount) {
         linesOfCode += amount;
     }
 
-    private void AddAssets(int amount) {
+    public void AddAssets(int amount) {
         assets += amount;
     }
 
@@ -261,40 +234,36 @@ public class EnemyAI : MonoBehaviour {
         return currentUnitSpaces;
     }
 
-    public void InitLevelUpBase() {
-        lvlUpStudio = true;
-    }
-
-    private void LevelUpBase() {
-        if (lvlUpStudio == true) {
-            lvlUpBar.gameObject.SetActive(true);
-            time += Time.deltaTime;
-            lvlUpBar.value = cLvlProgress;
-            if (time >= delay){
-                time = 0f;
-                cLvlProgress++;
-            }
-            if (cLvlProgress >= lvlUpTime) {
-                Player.Instance.AddBaseLvl();
-                ResetLvlBar();
-            }
-        }
-    }
-
-    private void ResetLvlBar() {
-        lvlUpStudio = false;
-        cLvlProgress = 0;
-        lvlUpBar.gameObject.SetActive(false);
-        baseLevel += 1;
-        time = 0;
-    }
-
     public int GetBaseLvl() {
         return baseLevel;
     }
 
     public List<GameObject> GetResourcesAvailable() {
         return resourcesAvailable;
+    }
+
+    public List<GameObject> GetOffensiveUnitGenerators() {
+        return offensiveUnitGenerators;
+    }
+
+    public void BuildBugGenerator() {
+        Instantiate(bugGeneratorPrefab, unitSpawnPoint.position, Quaternion.identity);
+    }
+
+    public void BuildSelfDoubtGenerator() {
+        Instantiate(bugGeneratorPrefab, unitSpawnPoint.position, Quaternion.identity);
+    }
+
+    public void BuildCriticGenerator() {
+        Instantiate(criticGenerator, unitSpawnPoint.position, Quaternion.identity);
+    }
+
+    public List<GameObject> GetCurrentAttackers() {
+        return currentAttackers;
+    }
+
+    public List<GameObject> GetWalls() {
+        return walls;
     }
 }
 
@@ -303,7 +272,7 @@ public class CheckIfUnderAttackNode : ConditionNode {
     public CheckIfUnderAttackNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override bool Condition() {
         //Debug.Log("Check if under attack");
-        if (EnemyAI.Instance.GetIsBeingAttacked() == true) {
+        if (EnemyAI.Instance.GetCurrentAttackers().Count > 0) {
             return true;
         }
         return false;
@@ -326,8 +295,8 @@ public class CheckRecolectionUnitsNode : ConditionNode {
     public override bool Condition() {
         //Debug.Log("Check Recolection Units Node");
         int counter = 0;
-        foreach (GameObject go in EnemyAI.Instance.GetMobileUnits()) {
-            if (go.GetComponent<EnemyRecolectors>() == true) {
+        for (int i = 0; i < EnemyAI.Instance.GetMobileUnits().Count; i++) {
+            if (EnemyAI.Instance.GetMobileUnits()[i].GetComponent<EnemyRecolectors>() == true) {
                 counter ++;
             }
         }
@@ -352,7 +321,11 @@ public class CheckLevelUpBaseNode : ConditionNode {
 public class CountEnemyUnitsNode : DecoratorNode {
     public CountEnemyUnitsNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override void Action() {
-        //Debug.Log("Count EnemyUnits Node");
+        // USLESS NODE
+        // USLESS NODE
+        // USLESS NODE
+        // USLESS NODE
+        // USLESS NODE
     }
 }
 
@@ -371,7 +344,8 @@ public class CheckResourcesForRecolectionUnits : ConditionNode {
     public CheckResourcesForRecolectionUnits(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override bool Condition() {
         //Debug.Log("CheckResourcesForRecolectionUnits");
-        if (EnemyAI.Instance.GetMoney() >= 40 && EnemyAI.Instance.GetMobileUnits().Count < EnemyAI.Instance.GetCurrentUnitSpaces()) {
+        if (EnemyAI.Instance.GetMoney() >= 40 && 
+            EnemyAI.Instance.GetMobileUnits().Count < EnemyAI.Instance.GetCurrentUnitSpaces()) {
             return true;
         }
         return false;
@@ -383,19 +357,20 @@ public class LevelUpBaseNode : ActionNode {
     public override void Action() {
         //Debug.Log("LevelUpBaseNode");
         EnemyAI.Instance.UseMoney(300);
-        EnemyAI.Instance.InitLevelUpBase();
+        VideogameCore.Instance.InitLevelUpBase();
     }
 }
 
 public class GatherResourceNode : ActionNode {
     public GatherResourceNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override void Action() {
-        foreach (GameObject unit in EnemyAI.Instance.GetMobileUnits()) {
-            if (unit.GetComponent<EnemyRecolectors>() == true) {
-                if (unit.GetComponent<EnemyRecolectors>().IsFarming() == false) {
+        for (int i = 0; i < EnemyAI.Instance.GetMobileUnits().Count; i++) {
+            EnemyRecolectors erScript = EnemyAI.Instance.GetMobileUnits()[i].GetComponent<EnemyRecolectors>();
+            if (erScript == true) {
+                if (erScript.IsFarming() == false && erScript.IsAttacking() == false) {
                     if (EnemyAI.Instance.GetResourcesAvailable().Count > 0) {
-                        unit.GetComponent<EnemyRecolectors>().SetState(new GoingToFarmEnemy_State(
-                            unit.GetComponent<EnemyRecolectors>(), 
+                        erScript.SetState(new GoingToFarmEnemy_State(
+                            erScript, 
                             EnemyAI.Instance.GetResourcesAvailable()[0]
                             .GetComponent<StationaryResource>())
                         );
@@ -403,15 +378,29 @@ public class GatherResourceNode : ActionNode {
                 }
             }
         }
+        // foreach (GameObject unit in EnemyAI.Instance.GetMobileUnits()) {
+        //     EnemyRecolectors erScript = unit.GetComponent<EnemyRecolectors>();
+        //     if (erScript == true) {
+        //         if (erScript.IsFarming() == false) {
+        //             if (EnemyAI.Instance.GetResourcesAvailable().Count > 0) {
+        //                 erScript.SetState(new GoingToFarmEnemy_State(
+        //                     erScript, 
+        //                     EnemyAI.Instance.GetResourcesAvailable()[0]
+        //                     .GetComponent<StationaryResource>())
+        //                 );
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
 
 public class CheckOffensiveUnitGeneratorNode : ConditionNode {
     public CheckOffensiveUnitGeneratorNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override bool Condition() {
-        // if (/*Theres an offensive unit generator*/) {
-        //     return true;
-        // }
+        if (EnemyAI.Instance.GetOffensiveUnitGenerators().Count > 0) {
+            return true;
+        }
         return false;
     }
 }
@@ -427,7 +416,20 @@ public class BuyHouseNode : ActionNode {
 public class GatherResourceForHouseNode : ActionNode {
     public GatherResourceForHouseNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override void Action() {
-        // Assign units for collection of materials for houses
+        foreach (GameObject unit in EnemyAI.Instance.GetMobileUnits()) {
+            EnemyRecolectors erScript = unit.GetComponent<EnemyRecolectors>();
+            if (erScript == true) {
+                if (erScript.IsFarming() == false && erScript.IsAttacking() == false) {
+                    if (EnemyAI.Instance.GetResourcesAvailable().Count > 0) {
+                        erScript.SetState(new GoingToFarmEnemy_State(
+                            erScript, 
+                            EnemyAI.Instance.GetResourcesAvailable()[0]
+                            .GetComponent<StationaryResource>())
+                        );
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -436,23 +438,36 @@ public class BuyRecolectionUnitNode : ActionNode {
     public override void Action() {
         // Buy recolection unit
         EnemyAI.Instance.UseMoney(40);
-        EnemyAI.Instance.SpawnRecolector();
+        VideogameCore.Instance.SpawnRecolector();
     }
 }
 
 public class GatherResourcesForRecolectionUnitNode : ActionNode {
     public GatherResourcesForRecolectionUnitNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override void Action() {
-        // Assign units for collection of materials for recolection unit!
+        foreach (GameObject unit in EnemyAI.Instance.GetMobileUnits()) {
+            EnemyRecolectors erScript = unit.GetComponent<EnemyRecolectors>();
+            if (erScript == true) {
+                if (erScript.IsFarming() == false && erScript.IsAttacking() == false) {
+                    if (EnemyAI.Instance.GetResourcesAvailable().Count > 0) {
+                        erScript.SetState(new GoingToFarmEnemy_State(
+                            erScript, 
+                            EnemyAI.Instance.GetResourcesAvailable()[0]
+                            .GetComponent<StationaryResource>())
+                        );
+                    }
+                }
+            }
+        }
     }
 }
 
 public class CheckOffensiveAndEnemyUnitsNode : ConditionNode {
     public CheckOffensiveAndEnemyUnitsNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override bool Condition() {
-        // if there are the same or more offensive units than enemy units { 
-            //return true;
-        //}
+        if (EnemyAI.Instance.GetMobileUnits().Count >= EnemyAI.Instance.GetCurrentAttackers().Count) {
+            return true;
+        }
         return false;
     }
 }
@@ -460,7 +475,9 @@ public class CheckOffensiveAndEnemyUnitsNode : ConditionNode {
 public class CheckResourcesForOffensiveGeneratorUnitNode : ConditionNode {
     public CheckResourcesForOffensiveGeneratorUnitNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override bool Condition() {
-        // if there are enough resources to buy a 
+        if (EnemyAI.Instance.GetMoney() >= 100) {
+            return true;
+        }
         return false;
     }
 }
@@ -469,13 +486,28 @@ public class BuyOffensiveGeneratorUnitNode : ActionNode {
     public BuyOffensiveGeneratorUnitNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override void Action() {
         // Buy offensive generator unit
+        EnemyAI.Instance.UseMoney(100);
+        EnemyAI.Instance.BuildBugGenerator();
     }
 }
 
 public class GatherResourceForOffGenUnitNode : ActionNode {
     public GatherResourceForOffGenUnitNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override void Action() {
-        // Gather resources for offensive generator unit 
+        for (int i = 0; i < EnemyAI.Instance.GetMobileUnits().Count; i++) {
+            EnemyRecolectors erScript = EnemyAI.Instance.GetMobileUnits()[i].GetComponent<EnemyRecolectors>();
+            if (erScript == true) {
+                if (erScript.IsFarming() == false && erScript.IsAttacking() == false) {
+                    if (EnemyAI.Instance.GetResourcesAvailable().Count > 0) {
+                        erScript.SetState(new GoingToFarmEnemy_State(
+                            erScript, 
+                            EnemyAI.Instance.GetResourcesAvailable()[0]
+                            .GetComponent<StationaryResource>())
+                        );
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -483,12 +515,67 @@ public class ProtectBaseNode : ActionNode {
     public ProtectBaseNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override void Action() {
         // Make mobile units attack enemy units that are attackin the base
+        for (int i = 0; i < EnemyAI.Instance.GetCurrentAttackers().Count; i++) {
+            MobileUnit mbScript = EnemyAI.Instance.GetMobileUnits()[i].GetComponent<MobileUnit>();
+            if (mbScript == true) {
+                mbScript.SetState(
+                    new ApproachingEnemy_State(
+                        mbScript, 
+                        EnemyAI.Instance.GetCurrentAttackers()[i].GetComponent<MobileUnit>()
+                    )
+                );
+            }
+        }
     }
 }
 
 public class BuyOffensiveUnitsNode : ActionNode {
     public BuyOffensiveUnitsNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
     public override void Action() {
-        // Buy offensive units until there are the same numbers of enemy units as well as offensive units
+        for (int i = 0; i < EnemyAI.Instance.GetCurrentAttackers().Count; i++) {
+            EnemyAI.Instance.GetOffensiveUnitGenerators()[i].GetComponent<BugGenerator>().SpawnBug();
+        }
+    }
+}
+
+public class CheckIfWallCanBeBoughtNode : ConditionNode {
+    private int counter;
+    public CheckIfWallCanBeBoughtNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
+    public override bool Condition() {
+        if (EnemyAI.Instance.GetMoney() >= 150) {
+            return true;
+        }
+        return false;
+    }
+}
+
+public class BuyWallNode : ActionNode {
+    public BuyWallNode(BehaviorTree behaviorTree) : base(behaviorTree) {}
+    public override void Action() {
+        for (int i = 0; i < EnemyAI.Instance.GetWalls().Count; i++) {
+            if (EnemyAI.Instance.GetWalls()[i].activeSelf == false) {
+                EnemyAI.Instance.UseMoney(150);
+                EnemyAI.Instance.GetWalls()[i].SetActive(true);
+                break;
+            }
+        }
+        EnemyAI.Instance.GetWalls();
+    }
+}
+
+public class CheckNumberOfWalls : ConditionNode {
+    public CheckNumberOfWalls(BehaviorTree behaviorTree) : base(behaviorTree) {}
+    public override bool Condition() {
+        int counter = 0;
+        for (int i = 0; i < EnemyAI.Instance.GetWalls().Count; i++) {
+            if (EnemyAI.Instance.GetWalls()[i].activeSelf == true) {
+                counter = counter + 1;
+            }
+        }
+        Debug.Log(counter);
+        if (counter < 21) {
+            return true;
+        }
+        return false;
     }
 }

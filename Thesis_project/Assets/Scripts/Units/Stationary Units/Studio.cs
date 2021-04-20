@@ -39,9 +39,9 @@ public class Studio : StationaryUnit {
     private bool lvlUpStudio;
 
     protected override void Start() {
+        maxHP = 5000;
+        attackDamage = 0;
         base.Start();
-        maxHP = 1000;
-        currentHP = maxHP;
         lvlUpTime = 30;
         lvlUpBar.maxValue = lvlUpTime;
         lvlUpBar.gameObject.SetActive(false);
