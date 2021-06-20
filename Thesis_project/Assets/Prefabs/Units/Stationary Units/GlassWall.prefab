@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9212378367154563923}
   - component: {fileID: 5221689320849712374}
   - component: {fileID: 8040013354806431804}
+  - component: {fileID: 541422838046529557}
   - component: {fileID: 8670071593705196730}
   m_Layer: 9
   m_Name: GlassWall
@@ -60,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 04980239a5909d3489a1bb6713cf2721, type: 2}
+  - {fileID: 2100000, guid: e2b555d7bd7145f4f95198985e6ceb79, type: 2}
   - {fileID: 2100000, guid: 132bdd6b610e1ac469ef1906c6726636, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -83,6 +84,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &541422838046529557
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8400095097601782249}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.6, y: 2.2910001, z: 3.0000002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!65 &8670071593705196730
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -24,7 +24,7 @@ public class Grid : MonoBehaviour {
     [SerializeField]private float size;
 
     private void Start() {
-        size = 3.85f;
+        size = 6f;
     }
 
     public Vector3 GetGridPoint(Vector3 pos) {
