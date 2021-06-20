@@ -30,7 +30,9 @@ public class Farming_State : State {
     }
 
     public override void OnStateExit() {
-        intern.GetCurrentResource().CheckQuantity();
+        if (intern.GetCurrentResource() != null) {
+            intern.GetCurrentResource().CheckQuantity();
+        }
         intern.GetAgent().isStopped = false;
     }
 }

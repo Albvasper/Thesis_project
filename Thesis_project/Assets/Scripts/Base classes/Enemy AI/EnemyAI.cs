@@ -572,7 +572,7 @@ public class CheckNumberOfWalls : ConditionNode {
                 counter = counter + 1;
             }
         }
-        Debug.Log(counter);
+        //Debug.Log(counter);
         if (counter < 21) {
             return true;
         }

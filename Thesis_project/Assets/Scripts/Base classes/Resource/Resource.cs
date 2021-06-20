@@ -13,7 +13,7 @@ public class Resource : MonoBehaviour {
     }
 
     protected virtual void Start() {
-        max_R_Amount = 20;
+        max_R_Amount = 2000;
         current_R_Amount = max_R_Amount;
         EnemyAI.Instance.GetResourcesAvailable().Add(gameObject);
     }

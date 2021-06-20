@@ -23,12 +23,31 @@ public class EmailManager : MonoBehaviour {
     #endregion
 
     [SerializeField] private GameObject emailScreen;
+    [SerializeField] private GameObject bg;
+    [SerializeField] private List<GameObject> emails = new List<GameObject>();
+    private bool gamePaused;
+
+    private void Start() {
+        OpenEmailScreen();
+    }
 
     public void OpenEmailScreen() {
         emailScreen.SetActive(true);
+        Time.timeScale = 0f;
+        gamePaused = true;
+        foreach (GameObject e in emails) {
+            e.SetActive(false);
+        }
+        bg.SetActive(true);
     }
 
     public void CloseEmailScreen() {
         emailScreen.SetActive(false);
+        Time.timeScale = 1f;
+        gamePaused = false;
+    }
+
+    public bool GetIsGamePaused() {
+        return gamePaused;
     }
 }

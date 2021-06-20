@@ -53,7 +53,8 @@ public class BuildManager : MonoBehaviour {
         Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
-            placeableObj.transform.position = new Vector3(hit.point.x, placeableObj.transform.position.y, hit.point.z);
+            placeableObj.transform.position = Grid.Instance.GetGridPoint(hit.point);
+            //placeableObj.transform.position = new Vector3(hit.point.x, placeableObj.transform.position.y, hit.point.z);
             if (Input.GetKeyDown(KeyCode.R)) {
                 // Rotate structure
                 float r = 0.0f;
@@ -83,7 +84,7 @@ public class BuildManager : MonoBehaviour {
             building = true;
             // Quit building mode
             initBuilding = false;
-            navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
+            //navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
         }
     }
 }

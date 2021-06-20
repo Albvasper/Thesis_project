@@ -45,9 +45,11 @@ public class CamController : MonoBehaviour {
 
     private void Update() {
         if (PauseMenu.Instance.GetIsGamePaused() == false) {
-            GetInput();
-            UpdateCursor();
-            ZoomCam();
+            if (EmailManager.Instance.GetIsGamePaused() == false) {
+                GetInput();
+                UpdateCursor();
+                ZoomCam();
+            }
         }
     }
     

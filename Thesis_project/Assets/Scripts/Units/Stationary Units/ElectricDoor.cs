@@ -10,6 +10,7 @@ public class ElectricDoor : StationaryUnit {
     [SerializeField] private GameObject doorB;
     [SerializeField] private NavMeshObstacle doorAobstacle;
     [SerializeField] private NavMeshObstacle doorBobstacle;
+    [SerializeField] private bool locked;
     [SerializeField] private bool aiElectricDoor;
 
     protected override void Start() {
@@ -17,7 +18,7 @@ public class ElectricDoor : StationaryUnit {
         attackDamage = 0;
         base.Start();
         aiUnit = aiElectricDoor;
-        EnableNavMeshPath();
+        DisableNavMeshPath();
     }
 
     protected override void Update() {
@@ -34,7 +35,8 @@ public class ElectricDoor : StationaryUnit {
                 DisableNavMeshPath();
             }
         } else {
-            if (other.tag == "Unit") {
+            Debug.Log("LMAO");
+            if (other.tag == "Unit" && locked == false) {
                 OpenDoors();
                 EnableNavMeshPath();
             } else {
@@ -46,7 +48,7 @@ public class ElectricDoor : StationaryUnit {
 
     private void OnTriggerExit(Collider other) {
         CloseDoors();
-        EnableNavMeshPath();
+        DisableNavMeshPath();
     }
 
     private void OpenDoors() {

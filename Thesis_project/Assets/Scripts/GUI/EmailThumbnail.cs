@@ -8,7 +8,7 @@ public class EmailThumbnail : MonoBehaviour {
     [SerializeField] private List<GameObject> otherEmails = new List<GameObject>();
     [SerializeField] private GameObject noEmailSelectedBG;
     
-    public void ShowMail(){
+    public void ShowMail() {
         foreach (GameObject email in otherEmails) {
             email.SetActive(false);
         }
