@@ -21,6 +21,7 @@ public abstract class Unit : MonoBehaviour {
         selected = false;
         currentHP = maxHP;
         healthBar.maxValue = maxHP;
+        healthBar.gameObject.SetActive(false);
         if (gameObject.tag == "EnemyUnit") {
             aiUnit = true;
         }
@@ -40,6 +41,7 @@ public abstract class Unit : MonoBehaviour {
     }
 
     public void TakeDamage(int dmg, Unit attacker) {
+        healthBar.gameObject.SetActive(true);
         currentHP -= dmg;
         if (aiUnit == true) {
             EnemyAI.Instance.IsBeingAttacked(attacker);

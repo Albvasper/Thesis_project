@@ -5,7 +5,6 @@ using UnityEngine;
 public class Wall : StationaryUnit {
     
     [SerializeField] private bool aiWall;
-    [SerializeField] private GameObject parentGO;
 
     protected override void Start() {
         maxHP = 800;
@@ -19,6 +18,6 @@ public class Wall : StationaryUnit {
     }
 
     protected override void Die() {
-        Destroy(parentGO);
+        Destroy(gameObject);
     }
 }

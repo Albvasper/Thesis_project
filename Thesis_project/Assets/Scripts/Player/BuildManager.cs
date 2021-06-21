@@ -53,7 +53,9 @@ public class BuildManager : MonoBehaviour {
         Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
+            float prefabYpos = placeableObj.transform.position.y;
             placeableObj.transform.position = Grid.Instance.GetGridPoint(hit.point);
+            placeableObj.transform.position = new Vector3(placeableObj.transform.position.x, prefabYpos, placeableObj.transform.position.z);
             //placeableObj.transform.position = new Vector3(hit.point.x, placeableObj.transform.position.y, hit.point.z);
             if (Input.GetKeyDown(KeyCode.R)) {
                 // Rotate structure
