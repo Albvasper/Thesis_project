@@ -59,7 +59,7 @@ public class Player : MonoBehaviour {
         mainCam = Camera.main;
         baseLevel = 1;
         maxBaseLevel = 3;
-        money = 1000;
+        money = 10000000;
         assets = 0;
         linesOfCode = 0;
         unitSpaces = 5;
