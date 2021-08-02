@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class VideogameCore : StationaryUnit {
 
@@ -32,7 +33,7 @@ public class VideogameCore : StationaryUnit {
     private bool lvlUpStudio;
 
     protected override void Start() {
-        maxHP = 5000;
+        maxHP = 10;
         attackDamage = 0;
         base.Start();
         lvlUpTime = 30;
@@ -50,8 +51,7 @@ public class VideogameCore : StationaryUnit {
     }
 
     protected override void Die() {
-        Debug.Log("Win!");
-        //SceneManager.LoadScene("Ending_4");
+        SceneManager.LoadScene("Crunch_Ending");
     }
 
     public void InitLevelUpBase() {

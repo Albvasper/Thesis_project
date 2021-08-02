@@ -43,6 +43,8 @@ public class EnemyAI : MonoBehaviour {
     [SerializeField] private GameObject selfDoubtGenerator;
     // Other
     [SerializeField] private List<GameObject> resourcesAvailable = new List<GameObject>();
+    // TEMPPPPPPPPPPP
+    public GameObject resourceTemp;
     // AI bevahior system
     private BehaviorTree behaviorTree;
     #region BehaviorTree nodes
@@ -371,7 +373,7 @@ public class GatherResourceNode : ActionNode {
                     if (EnemyAI.Instance.GetResourcesAvailable().Count > 0) {
                         erScript.SetState(new GoingToFarmEnemy_State(
                             erScript, 
-                            EnemyAI.Instance.GetResourcesAvailable()[0]
+                            EnemyAI.Instance.resourceTemp // TEMP
                             .GetComponent<StationaryResource>())
                         );
                     }
@@ -423,7 +425,7 @@ public class GatherResourceForHouseNode : ActionNode {
                     if (EnemyAI.Instance.GetResourcesAvailable().Count > 0) {
                         erScript.SetState(new GoingToFarmEnemy_State(
                             erScript, 
-                            EnemyAI.Instance.GetResourcesAvailable()[0]
+                            EnemyAI.Instance.resourceTemp   //TEMP
                             .GetComponent<StationaryResource>())
                         );
                     }
@@ -452,7 +454,7 @@ public class GatherResourcesForRecolectionUnitNode : ActionNode {
                     if (EnemyAI.Instance.GetResourcesAvailable().Count > 0) {
                         erScript.SetState(new GoingToFarmEnemy_State(
                             erScript, 
-                            EnemyAI.Instance.GetResourcesAvailable()[0]
+                            EnemyAI.Instance.resourceTemp // TEMPPP
                             .GetComponent<StationaryResource>())
                         );
                     }
@@ -501,7 +503,7 @@ public class GatherResourceForOffGenUnitNode : ActionNode {
                     if (EnemyAI.Instance.GetResourcesAvailable().Count > 0) {
                         erScript.SetState(new GoingToFarmEnemy_State(
                             erScript, 
-                            EnemyAI.Instance.GetResourcesAvailable()[0]
+                            EnemyAI.Instance.resourceTemp // TEMP
                             .GetComponent<StationaryResource>())
                         );
                     }
@@ -573,7 +575,7 @@ public class CheckNumberOfWalls : ConditionNode {
             }
         }
         //Debug.Log(counter);
-        if (counter < 21) {
+        if (counter < 725) {
             return true;
         }
         return false;

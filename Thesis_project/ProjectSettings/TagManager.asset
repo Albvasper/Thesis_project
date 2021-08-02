@@ -7,6 +7,7 @@ TagManager:
   - Unit
   - Resource
   - EnemyUnit
+  - Sensor
   layers:
   - Default
   - TransparentFX

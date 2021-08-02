@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Studio : StationaryUnit {
     
@@ -37,6 +38,7 @@ public class Studio : StationaryUnit {
     private float time;
     private int delay;
     private bool lvlUpStudio;
+    [SerializeField] private List<ElectricDoor> electricDoors = new List<ElectricDoor>();
 
     protected override void Start() {
         maxHP = 5000;
@@ -57,8 +59,7 @@ public class Studio : StationaryUnit {
     }
 
     protected override void Die() {
-        Debug.Log("Died!");
-        //SceneManager.LoadScene("Ending_4");
+        SceneManager.LoadScene("GameOver");
     }
 
     public void InitLvlUp() {
@@ -78,8 +79,12 @@ public class Studio : StationaryUnit {
             if (cLvlProgress >= lvlUpTime) {
                 Player.Instance.AddBaseLvl();
                 ResetLvlBar();
+                foreach (ElectricDoor door in electricDoors) {
+                    door.Unlock();
+                }
             }
         }
+        
     }
     
     private void ResetLvlBar() {

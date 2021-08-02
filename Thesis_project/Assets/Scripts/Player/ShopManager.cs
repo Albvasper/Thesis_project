@@ -34,27 +34,21 @@ public class ShopManager : MonoBehaviour {
     // Other
     private int officeSpaceValue = 10;
     [SerializeField] private List<GameObject> blockedOfficeSpaces = new List<GameObject>();
-    [SerializeField] private NavMeshSurface navMeshSurface;
 
     public void BuyOfficeSpace() {
-        // If there are anymore office spaces
-        if (blockedOfficeSpaces.Count > 0) {    
-            // Check if player can afford office space
+        // Check if player can afford office space
+        if (Player.Instance.GetCurrentUnitSpaces() < Player.Instance.GetMaxUnitSpaces()) {
             if (Player.Instance.GetMoney() >= officeSpacePrice) {
                 // Get money from player
                 Player.Instance.UseMoney(officeSpacePrice);
                 // Buy next unit space
-                blockedOfficeSpaces[blockedOfficeSpaces.Count - 1].SetActive(false);
-                blockedOfficeSpaces.RemoveAt(blockedOfficeSpaces.Count - 1);
                 Player.Instance.AddUnitSpaces(officeSpaceValue);
-                // Update nav mesh
-                navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
             } else {
                 // Not enough money
                 Player.Instance.ShowAlertToPlayer("Not enough money!");
             }
         } else {
-            Player.Instance.ShowAlertToPlayer("You already own the whole office!");
+            Player.Instance.ShowAlertToPlayer("There are no more unit spaces!");
         }
     }
 

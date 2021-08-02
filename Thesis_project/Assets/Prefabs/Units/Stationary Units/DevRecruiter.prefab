@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3192891809727429528}
   - component: {fileID: 840934422141095762}
   - component: {fileID: 1201164874843025028}
-  - component: {fileID: 1201164874843025029}
+  - component: {fileID: 3547136292902713651}
   - component: {fileID: 1201164874843025030}
   m_Layer: 9
   m_Name: DevRecruiter
@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201164874843025031}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.784, z: 0}
+  m_LocalPosition: {x: -0, y: 2.021, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2047463030174357868}
@@ -115,24 +115,24 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.969215, y: 2.5035105, z: 5.9964466}
-  m_Center: {x: 0.86552984, y: 1.2609329, z: 0}
---- !u!114 &1201164874843025029
-MonoBehaviour:
+  m_Size: {x: 3.9692147, y: 2.5035105, z: 5.9964466}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &3547136292902713651
+NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201164874843025031}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 1
-  m_Area: 1
-  m_IgnoreFromBuild: 0
-  m_AffectedAgents: ffffffff
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.9850001, y: 1.2520001, z: 2.9980001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!114 &1201164874843025030
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7373099198235168142}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.01193, z: 1.682}
+  m_LocalPosition: {x: 0, y: -0.02, z: 1.682}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7050451004184356992}
@@ -95,8 +95,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0047999267, y: 0.02880002, z: 0.04290072}
-  m_Center: {x: 0, y: 0.0024000122, z: -0.0014596123}
+  m_Size: {x: 0.47999278, y: 4.2900724, z: 2.8800032}
+  m_Center: {x: 0, y: -0.14596128, z: -0.24000084}
 --- !u!208 &7373099198235168179
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -107,11 +107,11 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.002, y: 0.014, z: 0.021000002}
+  m_Extents: {x: 0.24000001, y: 2.1450002, z: 1.44}
   m_MoveThreshold: 0.1
   m_Carve: 1
-  m_CarveOnlyStationary: 0
-  m_Center: {x: 0, y: 0.002, z: -0.001}
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -0.14600001, z: -0.24000001}
   m_TimeToStationary: 0.5
 --- !u!1 &7373099198842700362
 GameObject:
@@ -633,9 +633,10 @@ GameObject:
   - component: {fileID: 7373099199969860981}
   - component: {fileID: 7373099199969860986}
   - component: {fileID: 7373099199969860987}
+  - component: {fileID: 3299480327039914032}
   m_Layer: 9
   m_Name: Sensor
-  m_TagString: Untagged
+  m_TagString: Sensor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -665,8 +666,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0940261, y: 0.09860867, z: 0.021196313}
-  m_Center: {x: 4.5438222e-13, y: 0, z: -0.012322482}
+  m_Size: {x: 12.116002, y: 1.5324361, z: 5.964211}
+  m_Center: {x: 4.693235e-17, y: -1.6017843, z: -0.012322426}
 --- !u!114 &7373099199969860987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -674,7 +675,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7373099199969860980}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2da2712e9884a024b8e93000d30ca21e, type: 3}
   m_Name: 
@@ -688,6 +689,19 @@ MonoBehaviour:
   doorBobstacle: {fileID: 7373099198235168179}
   locked: 0
   aiElectricDoor: 0
+--- !u!114 &3299480327039914032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7373099199969860980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 215f1316ca7b1e74bb98ee6042ff0f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  electricDoor: {fileID: 7396185151675505750}
 --- !u!1 &7373099200118650197
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,7 +805,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7679740697134092795}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.011929998, z: -1.222}
+  m_LocalPosition: {x: 0, y: -0.02, z: -1.222}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7050451004184356992}
@@ -858,8 +872,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0047999267, y: 0.02880002, z: 0.04290072}
-  m_Center: {x: 0, y: 0.0024000122, z: -0.0014596123}
+  m_Size: {x: 0.47999278, y: 4.2900724, z: 2.8800032}
+  m_Center: {x: 0, y: -0.14596128, z: -0.24000156}
 --- !u!208 &7679740697134092793
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -870,11 +884,11 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.002, y: 0.014, z: 0.021000002}
+  m_Extents: {x: 0.24000001, y: 2.1450002, z: 1.44}
   m_MoveThreshold: 0.1
   m_Carve: 1
-  m_CarveOnlyStationary: 0
-  m_Center: {x: 0, y: 0.002, z: -0.001}
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -0.14600001, z: -0.24000001}
   m_TimeToStationary: 0.5
 --- !u!1 &7679740697741898298
 GameObject:
@@ -887,6 +901,8 @@ GameObject:
   - component: {fileID: 7050451004184356992}
   - component: {fileID: 6230695175454943013}
   - component: {fileID: 8183910279422907375}
+  - component: {fileID: 44899440740409484}
+  - component: {fileID: 7396185151675505750}
   m_Layer: 9
   m_Name: AutomaticDoor
   m_TagString: Unit
@@ -964,3 +980,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &44899440740409484
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7679740697741898298}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.233636, y: 5.277589, z: 6.0000014}
+  m_Center: {x: -0, y: 0.34779704, z: 0}
+--- !u!114 &7396185151675505750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7679740697741898298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da2712e9884a024b8e93000d30ca21e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 7373099199108578825}
+  selectionSprite: {fileID: 7373099199450835680}
+  parentGO: {fileID: 7679740697741898298}
+  doorA: {fileID: 7679740697134092795}
+  doorB: {fileID: 7373099198235168142}
+  doorAobstacle: {fileID: 7679740697134092793}
+  doorBobstacle: {fileID: 7373099198235168179}
+  locked: 0
+  aiElectricDoor: 0

@@ -28,14 +28,17 @@ public class Resource : MonoBehaviour {
     }
 
     public int GiveResource(int amount) {
-        current_R_Amount -= amount;
-        int result = amount;
-        if (current_R_Amount < 0) {
-            result = amount + current_R_Amount;
-            return result;
-        } else {
-            return result;
-        }
+        // current_R_Amount -= amount;
+        // int result = amount;
+        // if (current_R_Amount < 0) {
+        //     result = amount + current_R_Amount;
+        //     return result;
+        // } else {
+        //     return result;
+        // }
+
+        // temporal!!!
+        return amount;
     }
 
     public string GetResourceType() {

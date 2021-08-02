@@ -114,9 +114,10 @@ public class UnitController : MonoBehaviour {
                             }
                         }
                         else if (hit.collider.tag == "EnemyUnit") {
-                            Debug.Log("WHT");
+                            Debug.Log("???");
                             mobileUnit_Script.SetState(new ApproachingEnemy_State(mobileUnit_Script, hit.collider.GetComponent<Unit>()));
-                        } else {
+                        }
+                        else {
                             mobileUnit_Script.SetState(new Walking_State(mobileUnit_Script, hit.point));
                         }
                     }

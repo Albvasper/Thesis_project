@@ -14,14 +14,21 @@ public class ApproachingEnemy_State : State {
 
     public override void OnStateEnter() {
         mobileUnit.CurrentlyAttacking();
+
     }
 
     public override void Update() {
         if (enemyUnit != null) {
             mobileUnit.MoveUnit(enemyUnit.transform.position);
-            if (Vector3.Distance(mobileUnit.transform.position, enemyUnit.transform.position) < enemyProximity) {
-                // Change state to attack
-                mobileUnit.SetState(new Attacking_State(mobileUnit, enemyUnit));
+            if (enemyUnit.gameObject.layer == 9) {
+                if (Vector3.Distance(mobileUnit.transform.position, enemyUnit.transform.position) < 9) {
+                    mobileUnit.SetState(new Attacking_State(mobileUnit, enemyUnit));
+                }
+            } else {
+                if (Vector3.Distance(mobileUnit.transform.position, enemyUnit.transform.position) < enemyProximity) {
+                    // Change state to attack
+                    mobileUnit.SetState(new Attacking_State(mobileUnit, enemyUnit));
+                }
             }
         } else {
             mobileUnit.SetState(new IDLE_State(mobileUnit));

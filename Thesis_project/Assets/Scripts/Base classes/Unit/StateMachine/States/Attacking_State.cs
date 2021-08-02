@@ -23,7 +23,7 @@ public class Attacking_State : State {
         attackCoolDown -= Time.deltaTime;
         if (enemyUnit != null) {
             if (attackCoolDown <= 0f) {
-                if (Vector3.Distance(enemyUnit.transform.position, mobileUnit.transform.position) < 5) {
+                if (Vector3.Distance(enemyUnit.transform.position, mobileUnit.transform.position) < 5 || enemyUnit.gameObject.layer == 9) {
                     mobileUnit.Attack(enemyUnit);
                     // Make the other unit fight back
                     MobileUnit enemyMobileUnitScript = enemyUnit.GetComponent<MobileUnit>();
