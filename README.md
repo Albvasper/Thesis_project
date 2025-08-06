@@ -140,7 +140,7 @@ git clone https://github.com/Albvasper/Thesis_project.git
 ```
 
 
-## Demo
+## Play Game
 
 [![Play on Itch.io (Key: RTSGAME)](https://img.itch.zone/aW1nLzExMzE4MTQxLnBuZw==/original/1z%2F%2FsZ.png)](https://albvasper.itch.io/industry-simulator)
 
