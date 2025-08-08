@@ -28,7 +28,6 @@ This project demonstrates advanced game programming skills through an RTS game i
 | **AI System** | Custom Behavior Trees | Strategic enemy AI decision-making |
 | **Pathfinding** | Unity NavMesh | Unit movement and navigation |
 | **Architecture** | State Pattern, Singleton | Clean code organization |
-| **UI System** | Unity UI (uGUI) | Player interface and HUD |
 
 ## Core Systems Architecture
 
