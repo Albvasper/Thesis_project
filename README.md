@@ -140,8 +140,7 @@ git clone https://github.com/Albvasper/Thesis_project.git
 
 
 ## Play Game
-
-[![Play on Itch.io (Key: RTSGAME)](https://img.itch.zone/aW1nLzExMzE4MTQxLnBuZw==/original/1z%2F%2FsZ.png)](https://albvasper.itch.io/industry-simulator)
+[![Download on Itch.io (Key: RTSGAME)](https://img.shields.io/badge/Download-itch.io-FA5C5C?style=for-the-badge&logo=itch.io&logoColor=white)](https://albvasper.itch.io/industry-simulator)
 
 
 ## Screenshots
