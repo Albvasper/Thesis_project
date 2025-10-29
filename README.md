@@ -175,6 +175,5 @@ git clone https://github.com/Albvasper/Thesis_project.git
 ## Contact
 
 **Alberto Vásquez** - Game Programmer  
- [albert.vp09@gmail.com]  
- [https://codebyalberto.framer.website/]  
+https://codebyalberto.framer.website/
 
