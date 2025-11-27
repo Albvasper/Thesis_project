@@ -1,6 +1,4 @@
-![App Screenshot](https://img.itch.zone/aW1nLzIyNjA4MjQzLnBuZw==/original/dB%2FQfA.png)
-
-# 🎮 Advanced RTS Game with Intelligent AI Systems
+# RTS Game with Intelligent AI Systems
 
 [![Unity](https://img.shields.io/badge/Unity-2022.3%20LTS-black.svg?style=for-the-badge&logo=unity)](https://unity.com/)
 [![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)](https://docs.microsoft.com/en-us/dotnet/csharp/)
@@ -9,25 +7,27 @@
 > **An RTS game featuring a 6-layer behavior tree AI, advanced unit management, and real-time strategic gameplay built in Unity.**
 
 ## Project Overview
+A real-time strategy prototype developed in Unity featuring a fully custom 6-layer behavior tree AI, real-time unit management, and scalable RTS gameplay systems. Designed as a programming-focused project, it highlights strong architecture, clean patterns, and intelligent enemy decision-making. The system sustains 60+ FPS with 100+ active units, while handling pathfinding, building placement, and coordinated AI attacks.
 
-This project demonstrates advanced game programming skills through an RTS game implementation featuring intelligent enemy AI, complex unit coordination, and player interaction systems. Built with performance and scalability in mind, the game maintains 60+ FPS with 100+ active units.
-
-### Key Technical Achievements
+### Core Highlights
 - **6-Layer Behavior Tree AI** managing strategic decisions across defense, economy, and offense
 - **Advanced State Pattern** implementation for unit behaviors with seamless transitions
 - **Multi-Modal Player Controls** supporting complex RTS interactions (multi-select unit system, etc.)
 - **Real-Time Building System** with grid-based placement and NavMesh integration
 - **Performance-Optimized Architecture** maintaining stable framerate with complex systems
 
-## Technical Stack
+### Technical Stack
 
 | **Category** | **Technology** | **Purpose** |
 |--------------|----------------|-------------|
-| **Engine** | Unity 2022.3 LTS | Core game development platform |
-| **Language** | C# | Primary programming language |
+| **Engine** | Unity 2022.3 LTS | Core game engine |
+| **Language** | C# | Unity scripting language |
 | **AI System** | Custom Behavior Trees | Strategic enemy AI decision-making |
 | **Pathfinding** | Unity NavMesh | Unit movement and navigation |
 | **Architecture** | State Pattern, Singleton | Clean code organization |
+
+### Playable Build
+[![Download on Itch.io (Key: RTSGAME)](https://img.shields.io/badge/Download-itch.io-FA5C5C?style=for-the-badge&logo=itch.io&logoColor=white)](https://albvasper.itch.io/industry-simulator)
 
 ## Core Systems Architecture
 
@@ -70,6 +70,18 @@ Root (Sequence Node)
 - **Scalable Architecture**: Supports unlimited unit types and AI behaviors
 - **Stable Framerate**: 60+ FPS with complex systems and large unit counts
 
+## Key Scripts
+
+| Script                                                                                                     | Description                                                                 |
+|------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| [`EnemyAI.cs`](https://github.com/Albvasper/Thesis_project/blob/c76518aa31a3dd2826167692c95369ebf55f31da/Thesis_project/Assets/Scripts/Base%20classes/Enemy%20AI/EnemyAI.cs)       | Enemy AI that uses a 6 layer behavior tree                      |
+| [`BehaviorTree.cs`](https://github.com/Albvasper/Thesis_project/blob/c76518aa31a3dd2826167692c95369ebf55f31da/Thesis_project/Assets/Scripts/Base%20classes/Enemy%20AI/BehaviorTree/BehaviorTree.cs)       | Core behavior tree system that runs enemy AI decisions                     |
+| [`Node.cs`](https://github.com/Albvasper/Thesis_project/blob/c76518aa31a3dd2826167692c95369ebf55f31da/Thesis_project/Assets/Scripts/Base%20classes/Enemy%20AI/BehaviorTree/Nodes/Node.cs)                       | Base class for actions, conditions, and composite AI nodes                 |
+| [`Unit.cs`](https://github.com/Albvasper/Thesis_project/blob/c76518aa31a3dd2826167692c95369ebf55f31da/Thesis_project/Assets/Scripts/Base%20classes/Unit/Unit.cs)                    | Base unit logic with movement, task assignment, and coroutine FSM          |
+| [`BuildManager.cs`](https://github.com/Albvasper/Thesis_project/blob/c76518aa31a3dd2826167692c95369ebf55f31da/Thesis_project/Assets/Scripts/Player/BuildManager.cs) | Manages building placement, snapping, and resource cost validation         |
+| [`Player.cs`](https://github.com/Albvasper/Thesis_project/blob/c76518aa31a3dd2826167692c95369ebf55f31da/Thesis_project/Assets/Scripts/Player/Player.cs)   | Oversees global player state, task flow, and win/loss tracking               |
+| [`State.cs`](https://github.com/Albvasper/Thesis_project/blob/c76518aa31a3dd2826167692c95369ebf55f31da/Thesis_project/Assets/Scripts/Base%20classes/Unit/StateMachine/State.cs)             | Finite state machine implementation       |
+
 ## Project Structure
 
 ```
@@ -95,20 +107,6 @@ Assets/
 ├── Scenes/                     # Game levels and menus
 └── Materials/                  # Visual assets
 ```
-
-## Key Scripts
-
-| Script                                                                                                     | Description                                                                 |
-|------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
-| [`EnemyAI.cs`](https://github.com/Albvasper/Thesis_project/blob/c76518aa31a3dd2826167692c95369ebf55f31da/Thesis_project/Assets/Scripts/Base%20classes/Enemy%20AI/EnemyAI.cs)       | Enemy AI that uses a 6 layer behavior tree                      |
-| [`BehaviorTree.cs`](https://github.com/Albvasper/Thesis_project/blob/c76518aa31a3dd2826167692c95369ebf55f31da/Thesis_project/Assets/Scripts/Base%20classes/Enemy%20AI/BehaviorTree/BehaviorTree.cs)       | Core behavior tree system that runs enemy AI decisions                     |
-| [`Node.cs`](https://github.com/Albvasper/Thesis_project/blob/c76518aa31a3dd2826167692c95369ebf55f31da/Thesis_project/Assets/Scripts/Base%20classes/Enemy%20AI/BehaviorTree/Nodes/Node.cs)                       | Base class for actions, conditions, and composite AI nodes                 |
-| [`Unit.cs`](https://github.com/Albvasper/Thesis_project/blob/c76518aa31a3dd2826167692c95369ebf55f31da/Thesis_project/Assets/Scripts/Base%20classes/Unit/Unit.cs)                    | Base unit logic with movement, task assignment, and coroutine FSM          |
-| [`BuildManager.cs`](https://github.com/Albvasper/Thesis_project/blob/c76518aa31a3dd2826167692c95369ebf55f31da/Thesis_project/Assets/Scripts/Player/BuildManager.cs) | Manages building placement, snapping, and resource cost validation         |
-| [`Player.cs`](https://github.com/Albvasper/Thesis_project/blob/c76518aa31a3dd2826167692c95369ebf55f31da/Thesis_project/Assets/Scripts/Player/Player.cs)   | Oversees global player state, task flow, and win/loss tracking               |
-| [`State.cs`](https://github.com/Albvasper/Thesis_project/blob/c76518aa31a3dd2826167692c95369ebf55f31da/Thesis_project/Assets/Scripts/Base%20classes/Unit/StateMachine/State.cs)             | Finite state machine implementation       |
-
-
 
 ## Performance Metrics
 
@@ -139,10 +137,6 @@ git clone https://github.com/Albvasper/Thesis_project.git
 ```
 
 
-## Play Game
-[![Download on Itch.io (Key: RTSGAME)](https://img.shields.io/badge/Download-itch.io-FA5C5C?style=for-the-badge&logo=itch.io&logoColor=white)](https://albvasper.itch.io/industry-simulator)
-
-
 ## Screenshots
 
 ![App Screenshot](https://img.itch.zone/aW1hZ2UvOTY3OTkzLzIyNjA4MTk1LnBuZw==/original/5O29fl.png)
@@ -151,26 +145,6 @@ git clone https://github.com/Albvasper/Thesis_project.git
 
 ![App Screenshot](https://img.itch.zone/aW1hZ2UvOTY3OTkzLzIyNjA4MTk2LnBuZw==/original/l6pZ6t.png)
 
-
-## Technical Highlights
-
-### Advanced Programming Concepts
-- **Design Patterns**: State, Singleton, Abstract Factory implementations
-- **OOP Principles**: Clean inheritance hierarchies and polymorphism
-- **Performance Optimization**: Efficient algorithms and memory management
-- **System Architecture**: Modular design with clear separation of concerns
-
-### Unity Expertise
-- **AI Programming**: Custom behavior tree framework
-- **NavMesh Integration**: Advanced pathfinding and navigation
-- **UI Systems**: Dynamic interface with real-time updates
-- **Input Handling**: Complex RTS control schemes
-
-### Problem-Solving Skills
-- **Complex System Integration**: Multiple systems working seamlessly together
-- **Performance Under Load**: Maintaining stability with intensive operations  
-- **Scalable Architecture**: Design supports easy expansion and modification
-- **Real-World Application**: Production-ready code with proper error handling
 
 ## Contact
 
